@@ -1,0 +1,64 @@
+apply plugin: 'com.android.application'
+// 需要在MVP的module中使用apt
+apply plugin: 'com.neenbedankt.android-apt'
+android {
+    compileSdkVersion 25
+    buildToolsVersion "24.0.3"
+    defaultConfig {
+        applicationId "com.xy.mvp"
+        minSdkVersion 10
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        externalNativeBuild {
+            cmake {
+                cppFlags "-std=c++11 -frtti -fexceptions"
+            }
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+        }
+    }
+}
+
+dependencies {
+    //导入libs文件夹下全部的jar包
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    //android测速框架
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    //v7包
+    compile 'com.android.support:appcompat-v7:25.0.1'
+    //junit测速
+    testCompile 'junit:junit:4.12'
+    //rxjava依赖
+    compile 'io.reactivex:rxjava:1.1.0'
+    //rxandroid依赖
+    compile 'io.reactivex:rxandroid:1.1.0'
+    //retrofit依赖
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    //gson依赖
+    compile 'com.google.code.gson:gson:2.6.2'
+    //将gson和retrofit关联
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    //将rxjava和retrofit关联
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    //butterknife注解框架
+    compile 'com.jakewharton:butterknife:5.1.1'
+    // Dagger2注入框架
+    compile 'com.google.dagger:dagger:2.6'
+    // 使用apt插件为Dagger2生成代码
+    apt 'com.google.dagger:dagger-compiler:2.6'
+    // 添加OrmLite依赖
+    compile 'com.j256.ormlite:ormlite-android:5.0'
+}
