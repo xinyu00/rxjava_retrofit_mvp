@@ -7,7 +7,7 @@ package com.xy.mvp.utils;
 // 常量放置类
 public interface Constant {
     //IP
-    String BASEURL = "http://192.168.0.96:8080/";
+    String BASEURL = "http://192.168.0.80:8080/";
     // 登陆
     String LOGIN = "TakeoutService/login";
 }
