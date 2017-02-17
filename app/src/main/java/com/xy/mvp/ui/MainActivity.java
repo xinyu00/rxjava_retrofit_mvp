@@ -12,6 +12,7 @@ import com.xy.mvp.R;
 import com.xy.mvp.dagger.component.DaggerMainActivityComponent;
 import com.xy.mvp.dagger.module.MainActivityModule;
 import com.xy.mvp.presenter.MainActivityPresenter;
+import com.xy.mvp.utils.JniTest;
 
 import javax.inject.Inject;
 
@@ -19,6 +20,9 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class MainActivity extends AppCompatActivity {
+    static {
+        System.loadLibrary("native-lib");
+    }
     @InjectView(R.id.username)
     EditText mUsername;
     @InjectView(R.id.password)
@@ -28,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
     @Inject
     MainActivityPresenter presenter;
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         dialog = new ProgressDialog(this);
 
+        Toast.makeText(this, JniTest.getStockMarketCode("12333333"), Toast.LENGTH_SHORT).show();
         presenter = new MainActivityPresenter(this);
 
         DaggerMainActivityComponent component = (DaggerMainActivityComponent) DaggerMainActivityComponent.builder().mainActivityModule(new MainActivityModule(this)).build();
@@ -48,10 +56,10 @@ public class MainActivity extends AppCompatActivity {
         String password = mPassword.getText().toString();
 
         boolean checkUserInfo = checkUserInfo(username, password);
-        if (checkUserInfo){
+        if (checkUserInfo) {
             dialog.show();
-            presenter.login(username,password);
-        }else {
+            presenter.login(username, password);
+        } else {
             Toast.makeText(MainActivity.this, "用户名或密码不能为空", Toast.LENGTH_SHORT).show();
         }
 
@@ -65,22 +73,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void success() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                dialog.dismiss();
-                Toast.makeText(MainActivity.this, "欢迎回来：" + mUsername.getText().toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        dialog.dismiss();
+        Toast.makeText(MainActivity.this, "欢迎回来：" + mUsername.getText().toString(), Toast.LENGTH_SHORT).show();
+//        runOnUiThread(new Runnable() {        //rxjava 回调本身就是是主线程 无需再runOnUiThread
+//
+//            @Override
+//            public void run() {
+//
+//            }
+//        });
     }
 
     public void failed() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                dialog.dismiss();
-                Toast.makeText(MainActivity.this, "用户名或密码输入有误", Toast.LENGTH_SHORT).show();
-            }
-        });
+        dialog.dismiss();
+        Toast.makeText(MainActivity.this, "用户名或密码输入有误", Toast.LENGTH_SHORT).show();
+//        runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//            }
+//        });
     }
 }
