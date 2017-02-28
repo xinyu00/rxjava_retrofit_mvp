@@ -12,7 +12,6 @@ import com.xy.mvp.R;
 import com.xy.mvp.dagger.component.DaggerMainActivityComponent;
 import com.xy.mvp.dagger.module.MainActivityModule;
 import com.xy.mvp.presenter.MainActivityPresenter;
-import com.xy.mvp.utils.JniTest;
 
 import javax.inject.Inject;
 
@@ -43,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
 
         dialog = new ProgressDialog(this);
 
-        Toast.makeText(this, JniTest.getStockMarketCode("12333333"), Toast.LENGTH_SHORT).show();
-        presenter = new MainActivityPresenter(this);
+//        Toast.makeText(this, JniTest.getStockMarketCode("12333333"), Toast.LENGTH_SHORT).show();
+//        presenter = new MainActivityPresenter(this);
 
         DaggerMainActivityComponent component = (DaggerMainActivityComponent) DaggerMainActivityComponent.builder().mainActivityModule(new MainActivityModule(this)).build();
         component.in(this);

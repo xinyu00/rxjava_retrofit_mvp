@@ -7,12 +7,14 @@ import com.xy.mvp.presenter.api.ResponseInfoApi;
 import com.xy.mvp.ui.MainActivity;
 import com.xy.mvp.utils.Constant;
 
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
-import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * anthor:Created by tianchen on 2017/2/13.
@@ -21,7 +23,7 @@ import rx.schedulers.Schedulers;
 
 public class MainActivityPresenter {
     private MainActivity activity;
-    private final ResponseInfoApi api;
+        private final ResponseInfoApi api;
 
     public MainActivityPresenter(MainActivity activity) {
         this.activity = activity;
@@ -30,7 +32,7 @@ public class MainActivityPresenter {
         Retrofit.Builder builder = new Retrofit.Builder();
         builder.baseUrl(Constant.BASEURL);
         builder.addConverterFactory(ScalarsConverterFactory.create());
-        builder.addCallAdapterFactory(RxJavaCallAdapterFactory.create());
+        builder.addCallAdapterFactory(RxJava2CallAdapterFactory.create());
         //第二步 创建Retrofit
         Retrofit retrofit = builder.build();
 
@@ -77,16 +79,21 @@ public class MainActivityPresenter {
         api.rxlogin(username, password,3)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<String>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
+                .subscribe(new Subscriber<String>() {
                     @Override
                     public void onError(Throwable e) {
                         Log.e("异常",e.toString());
                         activity.failed();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+
+                    @Override
+                    public void onSubscribe(Subscription s) {
+
                     }
 
                     @Override
@@ -99,7 +106,8 @@ public class MainActivityPresenter {
                         }
                     }
                 });
-
     }
+
+
 
 }

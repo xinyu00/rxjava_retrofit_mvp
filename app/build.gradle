@@ -42,16 +42,16 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.0.1'
     //junit测速
     testCompile 'junit:junit:4.12'
-    //rxjava依赖
-    compile 'io.reactivex:rxjava:1.1.0'
-    //rxandroid依赖
-    compile 'io.reactivex:rxandroid:1.1.0'
+    //rxjava2.x依赖
+    compile 'io.reactivex.rxjava2:rxjava:2.0.6'
+    //rxandroid2.x依赖
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     //retrofit依赖
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:retrofit:2.2.0'
     //retrofit和string关联
-    compile 'com.squareup.retrofit2:converter-scalars:2.1.0'
-    //将rxjava和retrofit关联
-    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    compile 'com.squareup.retrofit2:converter-scalars:2.2.0'
+    //将rxjava2.x和retrofit关联
+    compile 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
     //butterknife注解框架
     compile 'com.jakewharton:butterknife:5.1.1'
     // Dagger2注入框架
@@ -62,4 +62,5 @@ dependencies {
     compile 'com.j256.ormlite:ormlite-android:5.0'
     //添加json解析工具fastjson
     compile 'com.alibaba:fastjson:1.2.24'
+
 }

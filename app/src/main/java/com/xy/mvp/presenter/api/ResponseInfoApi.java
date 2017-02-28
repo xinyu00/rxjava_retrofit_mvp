@@ -2,9 +2,9 @@ package com.xy.mvp.presenter.api;
 
 import com.xy.mvp.utils.Constant;
 
+import io.reactivex.Flowable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
-import rx.Observable;
 
 /**
  * anthor:Created by tianchen on 2017/2/13.
@@ -21,11 +21,11 @@ public interface ResponseInfoApi {
 //    @Query("type")
 //    int type);
     @GET(Constant.LOGIN)
-    public Observable<String> rxlogin(        //rxjava版本
-                                              @Query("username")// 参数的名字
+    public Flowable<String> rxlogin(        //rxjava版本
+                                            @Query("username")// 参数的名字
                                                       String username, // 该参数的值
-                                              @Query("password")
+                                            @Query("password")
                                                       String password,
-                                              @Query("type")
+                                            @Query("type")
                                                       int type);
 }
