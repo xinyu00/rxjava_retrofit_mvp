@@ -48,11 +48,13 @@
     <Button
         android:id="@+id/login"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
+        android:paddingTop="7dp"
+        android:gravity="center_horizontal|top"
         android:onClick="login"
-        android:text="login" />
+        android:background="@drawable/icon_starvideotype"
+        android:text="您将与客服人员进行通话，以完成身份确认"
+        android:textSize="14sp"/>
 </LinearLayout>
-
-

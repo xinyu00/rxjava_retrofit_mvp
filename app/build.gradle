@@ -6,7 +6,7 @@ android {
     buildToolsVersion "24.0.3"
     defaultConfig {
         applicationId "com.xy.mvp"
-        minSdkVersion 10
+        minSdkVersion 14
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -48,6 +48,8 @@ dependencies {
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     //retrofit依赖
     compile 'com.squareup.retrofit2:retrofit:2.2.0'
+    //okhttp3的log
+    compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
     //retrofit和string关联
     compile 'com.squareup.retrofit2:converter-scalars:2.2.0'
     //将rxjava2.x和retrofit关联
@@ -62,5 +64,4 @@ dependencies {
     compile 'com.j256.ormlite:ormlite-android:5.0'
     //添加json解析工具fastjson
     compile 'com.alibaba:fastjson:1.2.24'
-
 }
