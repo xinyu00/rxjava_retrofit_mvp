@@ -1,30 +1,26 @@
 package com.xy.mvp.ui;
 
 import android.app.ProgressDialog;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.xy.mvp.R;
-import com.xy.mvp.dagger.component.DaggerMainActivityComponent;
-import com.xy.mvp.dagger.module.MainActivityModule;
-import com.xy.mvp.presenter.MainActivityPresenter;
+import com.xy.mvp.base.BaseActivity;
+import com.xy.mvp.dagger.component.DaggerMainUIComponent;
+import com.xy.mvp.dagger.module.MainUIModule;
+import com.xy.mvp.presenter.MainUIPresenter;
 
 import org.reactivestreams.Subscriber;
 
 import javax.inject.Inject;
 
-import butterknife.ButterKnife;
 import butterknife.InjectView;
 import io.reactivex.Flowable;
 
-public class MainActivity extends AppCompatActivity {
-    static {
-        System.loadLibrary("native-lib");
-    }
+public class MainUI extends BaseActivity {
 
     @InjectView(R.id.username)
     EditText mUsername;
@@ -33,21 +29,14 @@ public class MainActivity extends AppCompatActivity {
     private ProgressDialog dialog;
 
     @Inject
-    MainActivityPresenter presenter;
-
+    MainUIPresenter presenter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.inject(this);
-
+    public void initData() {
         dialog = new ProgressDialog(this);
-
-//        Toast.makeText(this, JniTest.getStockMarketCode("12333333"), Toast.LENGTH_SHORT).show();
-//        presenter = new MainActivityPresenter(this);
-
-        DaggerMainActivityComponent component = (DaggerMainActivityComponent) DaggerMainActivityComponent.builder().mainActivityModule(new MainActivityModule(this)).build();
+        setTopColor(Color.BLUE);
+        //使用dagger2
+        DaggerMainUIComponent component = (DaggerMainUIComponent) DaggerMainUIComponent.builder().mainUIModule(new MainUIModule(this)).build();
         component.in(this);
     }
 
@@ -59,11 +48,10 @@ public class MainActivity extends AppCompatActivity {
         boolean checkUserInfo = checkUserInfo(username, password);
         if (checkUserInfo) {
             dialog.show();
-            presenter.login(username, password);
+//            presenter.login(username, password);
         } else {
-            Toast.makeText(MainActivity.this, "用户名或密码不能为空", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainUI.this, "用户名或密码不能为空", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     /**
@@ -106,11 +94,21 @@ public class MainActivity extends AppCompatActivity {
 
     public void success() {
         dialog.dismiss();
-        Toast.makeText(MainActivity.this, "欢迎回来：" + mUsername.getText().toString(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainUI.this, "欢迎回来：" + mUsername.getText().toString(), Toast.LENGTH_SHORT).show();
     }
 
     public void failed() {
         dialog.dismiss();
-        Toast.makeText(MainActivity.this, "用户名或密码输入有误", Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainUI.this, "用户名或密码输入有误", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_main;
     }
 }

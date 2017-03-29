@@ -6,11 +6,13 @@ import android.util.Log;
 import com.xy.mvp.presenter.api.Api;
 import com.xy.mvp.presenter.api.ApiService;
 import com.xy.mvp.presenter.api.HostType;
-import com.xy.mvp.ui.MainActivity;
+import com.xy.mvp.ui.MainUI;
 import com.xy.mvp.utils.Constant;
 
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
+
+import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -20,11 +22,12 @@ import io.reactivex.schedulers.Schedulers;
  * email:963181974@qq.com
  */
 
-public class MainActivityPresenter {
-    private MainActivity activity;
+public class MainUIPresenter {
+    private MainUI activity;
     private final ApiService api;
 
-    public MainActivityPresenter(MainActivity activity) {
+    @Inject
+    public MainUIPresenter(MainUI activity) {
         this.activity = activity;
         api = Api.getDefault(HostType.TYPE1, Constant.BASEURL);
     }

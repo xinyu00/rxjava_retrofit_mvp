@@ -16,6 +16,6 @@ public class ProApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        this.instance = instance;
+        instance = this;
     }
 }

@@ -23,6 +23,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            debuggable true
+            jniDebuggable true
+        }
     }
     externalNativeBuild {
         cmake {
@@ -38,10 +42,10 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    //v7包
-    compile 'com.android.support:appcompat-v7:25.0.1'
-    //junit测速
+    //junit测试
     testCompile 'junit:junit:4.12'
+    //v7包
+    compile 'com.android.support:appcompat-v7:25.2.0'
     //rxjava2.x依赖
     compile 'io.reactivex.rxjava2:rxjava:2.0.6'
     //rxandroid2.x依赖
@@ -58,10 +62,10 @@ dependencies {
     compile 'com.jakewharton:butterknife:5.1.1'
     // Dagger2注入框架
     compile 'com.google.dagger:dagger:2.6'
-    // 使用apt插件为Dagger2生成代码
-    apt 'com.google.dagger:dagger-compiler:2.6'
     // 添加OrmLite依赖
     compile 'com.j256.ormlite:ormlite-android:5.0'
     //添加json解析工具fastjson
     compile 'com.alibaba:fastjson:1.2.24'
+    // 使用apt插件为Dagger2生成代码
+    apt 'com.google.dagger:dagger-compiler:2.6'
 }
