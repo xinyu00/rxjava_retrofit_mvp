@@ -11,6 +11,6 @@ import dagger.Component;
  */
 //第三步： 通过接口将创建实例的代码和目标关联在一起
 @Component(modules = MainUIModule.class)
-public interface MainUIComponent {
+interface MainUIComponent {
     void in(MainUI activity);
 }

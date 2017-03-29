@@ -30,11 +30,10 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
  */
 public class Api {
     //读超时长，单位：毫秒
-    public static final int READ_TIME_OUT = 7676;
+    private static final int READ_TIME_OUT = 7676;
     //连接时长，单位：毫秒
-    public static final int CONNECT_TIME_OUT = 7676;
-    public Retrofit retrofit;
-    public ApiService movieService;
+    private static final int CONNECT_TIME_OUT = 7676;
+    private ApiService movieService;
 
     private static SparseArray<Api> sRetrofitManager = new SparseArray<>(HostType.TYPE_COUNT);
 
@@ -100,12 +99,11 @@ public class Api {
                 .addInterceptor(logInterceptor)
                 .cache(cache)
                 .build();
-
-        retrofit = new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .client(okHttpClient)
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .baseUrl(baseUrl)
+                .baseUrl(baseUrl)       //hostType用于分类url
                 .build();
         movieService = retrofit.create(ApiService.class);
     }

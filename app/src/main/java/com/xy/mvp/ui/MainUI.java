@@ -11,6 +11,7 @@ import com.xy.mvp.R;
 import com.xy.mvp.base.BaseActivity;
 import com.xy.mvp.dagger.component.DaggerMainUIComponent;
 import com.xy.mvp.dagger.module.MainUIModule;
+import com.xy.mvp.master.AppManager;
 import com.xy.mvp.presenter.MainUIPresenter;
 
 import org.reactivestreams.Subscriber;
@@ -44,7 +45,7 @@ public class MainUI extends BaseActivity {
     public void login(View view) {
         String username = mUsername.getText().toString();
         String password = mPassword.getText().toString();
-
+        AppManager.getActivity(this.getClass());
         boolean checkUserInfo = checkUserInfo(username, password);
         if (checkUserInfo) {
             dialog.show();
@@ -110,5 +111,10 @@ public class MainUI extends BaseActivity {
     @Override
     public int getLayoutId() {
         return R.layout.activity_main;
+    }
+
+    @Override
+    public void onBackPressed() {
+        secondClickFinish();
     }
 }

@@ -8,7 +8,7 @@ import android.app.Application;
 
 public class ProApplication extends Application {
     private static ProApplication instance;
-
+    public AppManager appManager;
     public static ProApplication getInstance() {
         return instance;
     }
@@ -17,5 +17,7 @@ public class ProApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+        appManager = AppManager.getAppManager();
     }
+
 }

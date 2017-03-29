@@ -13,13 +13,14 @@ public class IndexUI extends BaseActivity {
     }
 
     @Override
+    public void initData() {
+
+    }
+
+    @Override
     public int getLayoutId() {
         return R.layout.activity_index;
     }
 
-    @Override
-    public void initData() {
-
-    }
 
 }

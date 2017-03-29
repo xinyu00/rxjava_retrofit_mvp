@@ -22,4 +22,5 @@ public class NavigateUI extends BaseActivity {
         return R.layout.activity_navigate;
     }
 
+
 }

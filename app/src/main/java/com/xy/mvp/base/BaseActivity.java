@@ -12,7 +12,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
+import com.xy.mvp.master.AppManager;
 import com.xy.mvp.utils.AdapterUtil;
+import com.xy.mvp.utils.ToastUtils;
 
 import butterknife.ButterKnife;
 
@@ -27,7 +29,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     private View top;
     private LinearLayout.LayoutParams llParams;
     private LinearLayout.LayoutParams topparams;
-
+    protected AppManager appManager;
+    // 返回按钮按下时间
+    private long currentBackPressedTime = 0;
+    // 退出间隔
+    private static final int BACK_PRESSED_INTERVAL = 2000;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +43,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         ll_content.setOrientation(LinearLayout.VERTICAL);
         setContentView(ll_content);
         content = (ViewGroup) LayoutInflater.from(this).inflate(getLayoutId(), null);
-
+        appManager = AppManager.getAppManager();
         // 设置沉浸式
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window window = getWindow();
@@ -50,12 +56,17 @@ public abstract class BaseActivity extends AppCompatActivity {
             ll_content.addView(top);
         }
         ll_content.addView(content);
-
+        appManager.addActivity(this);
         ButterKnife.inject(this);
         //初始化布局
         initView();
         //初始化数据
         initData();
+    }
+
+    @Override
+    public void onBackPressed() {
+        AppManager.getAppManager().finishActivity();
     }
 
     /**
@@ -70,7 +81,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * 用于获取布局的id
-     * @return  布局id
+     *
+     * @return 布局id
      */
     public abstract int getLayoutId();
 
@@ -86,6 +98,16 @@ public abstract class BaseActivity extends AppCompatActivity {
             case 1:
                 ll_content.removeView(top);
                 break;
+        }
+    }
+
+    public void secondClickFinish() {
+        if (System.currentTimeMillis() - currentBackPressedTime > BACK_PRESSED_INTERVAL) {
+            currentBackPressedTime = System.currentTimeMillis();
+            ToastUtils.showShort("再按一次返回键退出程序");
+        } else {
+            // 退出
+            appManager.finishAllActivity();
         }
     }
 }

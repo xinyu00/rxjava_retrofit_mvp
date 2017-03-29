@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Rxjava_retrofit_mvp</string>
+    <string name="app_name">MvpFrame</string>
     <string name="title_activity_base2">Base2Activity</string>
     <string name="title_activity_index_ui">IndexUI</string>
 </resources>
