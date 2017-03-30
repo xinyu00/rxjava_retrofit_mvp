@@ -26,40 +26,52 @@ public abstract class BaseActivity extends AppCompatActivity {
     private LinearLayout ll_content;
     private ViewGroup content;
     private View top;
-    private LinearLayout.LayoutParams llParams;
     private LinearLayout.LayoutParams topparams;
     protected AppManager appManager;
     // 返回按钮按下时间
     private long currentBackPressedTime = 0;
     // 退出间隔
     private static final int BACK_PRESSED_INTERVAL = 2000;
-
+    private boolean flag;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ll_content = new LinearLayout(this);
         //设置当前Activity布局填充满屏幕
-        llParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        ll_content.setLayoutParams(llParams);
+        ll_content.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         ll_content.setOrientation(LinearLayout.VERTICAL);   //竖直布局
         setContentView(ll_content);     //Activity填充布局
-
+        flag = true;
         //Activity管理
         appManager = AppManager.getAppManager();
         appManager.addActivity(this);
+        //初始化布局
+        initView();
+    }
 
+    @Override
+    protected void onStart() {
+        super.onResume();
+        if (flag){
+            //设置沉浸式标题栏
+            setSonView();
+            //初始化数据
+            initData();
+            flag = false;
+        }
+    }
+
+    /**
+     * 设置ll_content的子布局
+     */
+    private void setSonView(){
+        setImmersion();
         //获取子类布局
         content = (ViewGroup) LayoutInflater.from(this).inflate(getLayoutId(), null);
-        //设置沉浸式标题栏
-        setImmersion();
         //添加主体布局
         ll_content.addView(content);
         //初始化ButterKnife注解框架
         ButterKnife.inject(this);
-        //初始化布局
-        initView();
-        //初始化数据
-        initData();
     }
 
     /**
@@ -79,6 +91,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             top.setBackgroundColor(Color.BLUE);
             ll_content.addView(top);
         }
+
     }
 
     /**
