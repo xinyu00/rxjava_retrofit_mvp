@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
@@ -34,29 +33,28 @@ public abstract class BaseActivity extends AppCompatActivity {
     private long currentBackPressedTime = 0;
     // 退出间隔
     private static final int BACK_PRESSED_INTERVAL = 2000;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ll_content = new LinearLayout(this);
+        //设置当前Activity布局填充满屏幕
         llParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         ll_content.setLayoutParams(llParams);
-        ll_content.setOrientation(LinearLayout.VERTICAL);
-        setContentView(ll_content);
-        content = (ViewGroup) LayoutInflater.from(this).inflate(getLayoutId(), null);
+        ll_content.setOrientation(LinearLayout.VERTICAL);   //竖直布局
+        setContentView(ll_content);     //Activity填充布局
+
+        //Activity管理
         appManager = AppManager.getAppManager();
-        // 设置沉浸式
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Window window = getWindow();
-            window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            top = new View(this);
-            topparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, AdapterUtil.dp2px(25, this));
-            top.setLayoutParams(topparams);
-            top.setBackgroundColor(Color.BLUE);
-            ll_content.addView(top);
-        }
-        ll_content.addView(content);
         appManager.addActivity(this);
+
+        //获取子类布局
+        content = (ViewGroup) LayoutInflater.from(this).inflate(getLayoutId(), null);
+        //设置沉浸式标题栏
+        setImmersion();
+        //添加主体布局
+        ll_content.addView(content);
+        //初始化ButterKnife注解框架
         ButterKnife.inject(this);
         //初始化布局
         initView();
@@ -64,13 +62,35 @@ public abstract class BaseActivity extends AppCompatActivity {
         initData();
     }
 
+    /**
+     * 设置沉浸式布局
+     */
+    private void setImmersion(){
+        // 判断SDK的Api是否大于19
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            //设置沉浸式标题栏
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+            //添加标题栏view
+            top = new View(this);
+            topparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, AdapterUtil.dp2px(25, this));
+            top.setLayoutParams(topparams);
+            top.setBackgroundColor(Color.BLUE);
+            ll_content.addView(top);
+        }
+    }
+
+    /**
+     * 默认Activity返回键退出Activity
+     */
     @Override
     public void onBackPressed() {
         AppManager.getAppManager().finishActivity();
     }
 
     /**
-     * 保留方法 (初始化布局)
+     * 保留方法 (初始化布局,目前ButterKnife实现)
      */
     public abstract void initView();
 
@@ -86,11 +106,22 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     public abstract int getLayoutId();
 
+    /**
+     * 设置沉浸式标题栏颜色
+     * @param color
+     */
     public void setTopColor(@ColorInt int color) {
         top.setBackgroundColor(color);
     }
 
+    /**
+     * 沉浸式时，设置标题栏布局是否隐藏
+     * @param choose  0:隐藏标题栏 1:移出标题栏
+     */
     public void setTopShow(int choose) {
+        if (top == null) {
+            return;
+        }
         switch (choose) {
             case 0:
                 top.setVisibility(View.GONE);
@@ -101,6 +132,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 设置当前Activity二次点击退出整个APP
+     */
     public void secondClickFinish() {
         if (System.currentTimeMillis() - currentBackPressedTime > BACK_PRESSED_INTERVAL) {
             currentBackPressedTime = System.currentTimeMillis();

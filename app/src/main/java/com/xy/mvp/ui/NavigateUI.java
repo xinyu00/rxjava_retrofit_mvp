@@ -3,6 +3,9 @@ package com.xy.mvp.ui;
 import com.xy.mvp.R;
 import com.xy.mvp.base.BaseActivity;
 
+/**
+ * 指引导航页
+ */
 public class NavigateUI extends BaseActivity {
 
     @Override

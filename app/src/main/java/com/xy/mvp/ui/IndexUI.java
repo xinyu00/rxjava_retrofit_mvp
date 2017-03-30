@@ -5,6 +5,9 @@ import android.graphics.Color;
 import com.xy.mvp.R;
 import com.xy.mvp.base.BaseActivity;
 
+/**
+ * 主界面
+ */
 public class IndexUI extends BaseActivity {
 
     @Override

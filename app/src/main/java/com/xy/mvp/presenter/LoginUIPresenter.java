@@ -3,10 +3,11 @@ package com.xy.mvp.presenter;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.xy.mvp.base.BaseActivityPresenter;
 import com.xy.mvp.presenter.api.Api;
 import com.xy.mvp.presenter.api.ApiService;
 import com.xy.mvp.presenter.api.HostType;
-import com.xy.mvp.ui.MainUI;
+import com.xy.mvp.ui.LoginUI;
 import com.xy.mvp.utils.Constant;
 
 import org.reactivestreams.Subscriber;
@@ -22,13 +23,11 @@ import io.reactivex.schedulers.Schedulers;
  * email:963181974@qq.com
  */
 
-public class MainUIPresenter {
-    private MainUI activity;
-    private final ApiService api;
-
+public class LoginUIPresenter extends BaseActivityPresenter<LoginUI> {
+    private ApiService api;
     @Inject
-    public MainUIPresenter(MainUI activity) {
-        this.activity = activity;
+    public LoginUIPresenter(LoginUI activity) {
+        super(activity);
         api = Api.getDefault(HostType.TYPE1, Constant.BASEURL);
     }
 
@@ -36,7 +35,7 @@ public class MainUIPresenter {
      * 用户登录rxjava版本
      */
     public void login(String username, String password) {
-        api.rxlogin(Api.getCacheControl(),username, password, 3)
+        api.rxlogin(Api.getCacheControl(), username, password, 3)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<String>() {
@@ -62,11 +61,9 @@ public class MainUIPresenter {
                             Log.e("json串", s);
                             activity.success();
                         } else {
-
+                            //TODO:待定
                         }
                     }
                 });
     }
-
-
 }
