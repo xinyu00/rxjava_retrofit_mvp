@@ -79,13 +79,6 @@ public class MessageDialog extends Dialog implements View.OnClickListener {
         return view;
     }
 
-    public void finishDialog() {
-        if (msgDialog != null) {
-            msgDialog.dismiss();
-            msgDialog = null;
-        }
-    }
-
     private Activity getContent(){
         return AppManager.getAppManager().currentActivity();
     }

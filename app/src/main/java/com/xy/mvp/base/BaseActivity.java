@@ -16,7 +16,6 @@ import android.widget.LinearLayout;
 import com.xy.mvp.dagger.module.ActivityModule;
 import com.xy.mvp.utils.AdapterUtil;
 import com.xy.mvp.utils.ToastUtils;
-import com.xy.mvp.view.MessageDialog;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -177,7 +176,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        MessageDialog.getInstance().finishDialog();
         unbinder.unbind();
     }
 }
