@@ -8,4 +8,5 @@ package com.xy.mvp.model.net;
 public class ResponseInfo {
     public String code;
     public String data;
+    public String msg;
 }

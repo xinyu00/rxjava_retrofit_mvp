@@ -13,13 +13,26 @@ import retrofit2.http.Query;
  */
 
 public interface ApiService {
-    @GET(Constant.LOGIN)
+    @GET(Constant.USER)
     public Flowable<String> rxlogin(
             @Header("Cache-Control") String cacheControl,
             @Query("username")
                     String username,
             @Query("password")
                     String password,
+            @Query("type")
+                    int type);
+
+    @GET(Constant.USER)
+    public Flowable<String> register(
+            @Query("phone")
+                    String phone,
+            @Query("password")
+                    String password,
+            @Query("ip")
+                    String ip,
+            @Query("role")
+                    int role,
             @Query("type")
                     int type);
 }

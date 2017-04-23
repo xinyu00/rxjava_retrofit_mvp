@@ -1,11 +1,9 @@
-package com.xy.mvp.ui;
+package com.xy.mvp;
 
 import android.app.Activity;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
-
-import com.xy.mvp.R;
 
 public class TestUI extends Activity {
     private static final String TAG = "TestUI";

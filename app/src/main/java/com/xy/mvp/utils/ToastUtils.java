@@ -2,11 +2,10 @@ package com.xy.mvp.utils;
 
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.Gravity;
 import android.widget.Toast;
 
-import com.xy.mvp.master.AppManager;
+import com.xy.mvp.base.AppManager;
 
 /**
  * Toast统一管理类
@@ -25,7 +24,6 @@ public class ToastUtils {
 
     /**
      * 短时间显示Toast
-     * @param message
      */
     public static void showShort(CharSequence message) {
         if (isShow)
@@ -34,8 +32,6 @@ public class ToastUtils {
 
     /**
      * 短时间显示Toast
-     *
-     * @param message
      */
     public static void showShort(int message) {
         if (isShow)
@@ -44,8 +40,6 @@ public class ToastUtils {
 
     /**
      * 长时间显示Toast
-     *
-     * @param message
      */
     public static void showLong(CharSequence message) {
         if (isShow)
@@ -54,8 +48,6 @@ public class ToastUtils {
 
     /**
      * 长时间显示Toast
-     *
-     * @param message
      */
     public static void showLong(int message) {
         if (isShow)
@@ -64,9 +56,6 @@ public class ToastUtils {
 
     /**
      * 自定义显示Toast时间
-     *
-     * @param message
-     * @param duration
      */
     public static void show(CharSequence message, int duration) {
         if (isShow)
@@ -75,9 +64,6 @@ public class ToastUtils {
 
     /**
      * 自定义显示Toast时间
-     *
-     * @param message
-     * @param duration
      */
     public static void show(int message, int duration) {
         if (isShow)
@@ -87,7 +73,6 @@ public class ToastUtils {
 
     /**
      * 自定义显示位置 居中
-     * @param message
      */
     public static void centershow(CharSequence message) {
         if (isShow) {

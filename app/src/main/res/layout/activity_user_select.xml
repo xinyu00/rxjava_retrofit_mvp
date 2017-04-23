@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_user_select"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.xy.mvp.ui.UserSelectUI">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/icon_size"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/bt_login"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin"
+            android:layout_weight="1"
+            android:background="@drawable/shape_login_button"
+            android:text="@string/login"
+            android:textColor="@color/black"
+            android:textSize="@dimen/icon_text" />
+
+        <Button
+            android:id="@+id/bt_new_user"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin"
+            android:layout_weight="1"
+            android:background="@drawable/shape_newuser_button"
+            android:text="@string/new_user"
+            android:textColor="@color/white"
+            android:textSize="@dimen/icon_text" />
+    </LinearLayout>
+
+</RelativeLayout>

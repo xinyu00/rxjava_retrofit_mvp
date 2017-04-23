@@ -1,5 +1,7 @@
 package com.xy.mvp.base;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,17 +13,18 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
-import com.xy.mvp.master.AppManager;
+import com.xy.mvp.dagger.module.ActivityModule;
 import com.xy.mvp.utils.AdapterUtil;
 import com.xy.mvp.utils.ToastUtils;
+import com.xy.mvp.view.MessageDialog;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * anthor:Created by tianchen on 2017/3/27.
  * email:963181974@qq.com
  */
-
 public abstract class BaseActivity extends AppCompatActivity {
     private LinearLayout ll_content;
     private ViewGroup content;
@@ -32,6 +35,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private long currentBackPressedTime = 0;
     // 退出间隔
     private static final int BACK_PRESSED_INTERVAL = 2000;
+    private Unbinder unbinder;
     private boolean flag;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,11 +46,22 @@ public abstract class BaseActivity extends AppCompatActivity {
         ll_content.setOrientation(LinearLayout.VERTICAL);   //竖直布局
         setContentView(ll_content);     //Activity填充布局
         flag = true;
+
         //Activity管理
         appManager = AppManager.getAppManager();
         appManager.addActivity(this);
         //初始化布局
         initView();
+    }
+
+    protected ActivityModule getActivityModule() {
+        return new ActivityModule(this);
+    }
+
+    protected void addFragment(int containerViewId, Fragment fragment) {
+        final FragmentTransaction fragmentTransaction = this.getFragmentManager().beginTransaction();
+        fragmentTransaction.add(containerViewId, fragment);
+        fragmentTransaction.commit();
     }
 
     @Override
@@ -68,10 +83,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         setImmersion();
         //获取子类布局
         content = (ViewGroup) LayoutInflater.from(this).inflate(getLayoutId(), null);
+        content.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
         //添加主体布局
         ll_content.addView(content);
         //初始化ButterKnife注解框架
-        ButterKnife.inject(this);
+        unbinder = ButterKnife.bind(this);
     }
 
     /**
@@ -156,5 +172,12 @@ public abstract class BaseActivity extends AppCompatActivity {
             // 退出
             appManager.finishAllActivity();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MessageDialog.getInstance().finishDialog();
+        unbinder.unbind();
     }
 }

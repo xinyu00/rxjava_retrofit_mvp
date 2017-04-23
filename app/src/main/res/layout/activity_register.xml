@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/et_phone"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/login_et"
+            android:layout_marginTop="150dp"
+            android:background="@color/white"
+            android:hint="手机号"
+            android:paddingLeft="@dimen/big_margin"
+            android:paddingRight="@dimen/big_margin"
+            android:textColorHint="@color/hint"
+            android:textSize="@dimen/icon_text" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line"
+            android:background="@color/line" />
+
+        <EditText
+            android:id="@+id/et_password"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/login_et"
+            android:background="@color/white"
+            android:hint="密码"
+            android:paddingLeft="@dimen/big_margin"
+            android:paddingRight="@dimen/big_margin"
+            android:textColorHint="@color/hint"
+            android:textSize="@dimen/icon_text" />
+
+        <Button
+            android:id="@+id/bt_register"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/login_et"
+            android:layout_margin="@dimen/big_margin"
+            android:background="@drawable/shape_enter_button"
+            android:onClick="login"
+            android:text="注册"
+            android:textColor="@color/white"
+            android:textSize="@dimen/top_text" />
+    </LinearLayout>
+</LinearLayout>

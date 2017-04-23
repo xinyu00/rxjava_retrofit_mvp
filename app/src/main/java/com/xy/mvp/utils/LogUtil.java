@@ -9,43 +9,44 @@ public class LogUtil {
 	/**
 	 * 是否打印输出
 	 */
-	public static boolean isPrint = true;
+	private static boolean isPrint = false;
+
+	public static void logInit(boolean flag){
+		isPrint = flag;
+	}
 
 	/**
 	 * 关闭或打开d（蓝色）输出
 	 */
-	public static boolean isPrint_d = true;
+	private static boolean isPrint_d = true;
 
 	/**
 	 * 关闭或打开e（红色）输出
 	 */
-	public static boolean isPrint_e = true;
+	private static boolean isPrint_e = true;
 
 	/**
 	 * 关闭或打开w（黄色）输出
 	 */
-	public static boolean isPrint_w = true;
+	private static boolean isPrint_w = true;
 
 	/**
 	 * 关闭或打开i（绿色）输出
 	 */
-	public static boolean isPrint_i = true;
+	private static boolean isPrint_i = true;
 
 	/**
 	 * 关闭或打开v（黑色）输出
 	 */
-	public static boolean isPrint_v = true;
+	private static boolean isPrint_v = true;
 
 	/**
 	 * Log输出的前部分Tag
 	 */
-	public static String TAG = "XJ";
+	private static String TAG = "APP";
 
 	/**
 	 * 使用自定义TAG打印（颜色是蓝色）
-	 * 
-	 * @param tag
-	 * @param content
 	 */
 	public static void d(String tag, String content) {
 		if (isPrint && isPrint_d) {
@@ -55,8 +56,6 @@ public class LogUtil {
 
 	/**
 	 * 使用默认TAG打印（颜色是蓝色）
-	 * 
-	 * @param content
 	 */
 	public static void d(String content) {
 		if (isPrint && isPrint_d) {
@@ -66,9 +65,6 @@ public class LogUtil {
 
 	/**
 	 * 使用自定义TAG打印（颜色为黑色）
-	 * 
-	 * @param tag
-	 * @param content
 	 */
 	public static void v(String tag, String content) {
 		if (isPrint && isPrint_v) {
@@ -78,8 +74,6 @@ public class LogUtil {
 
 	/**
 	 * 使用默认TAG打印（颜色为黑色）
-	 * 
-	 * @param content
 	 */
 	public static void v(String content) {
 		if (isPrint && isPrint_v) {
@@ -89,9 +83,6 @@ public class LogUtil {
 
 	/**
 	 * 使用自定义TAG打印（颜色为黄色）
-	 * 
-	 * @param tag
-	 * @param content
 	 */
 	public static void w(String tag, String content) {
 		if (isPrint && isPrint_w) {
@@ -101,8 +92,6 @@ public class LogUtil {
 
 	/**
 	 * 使用默认TAG打印（颜色为黄色）
-	 * 
-	 * @param content
 	 */
 	public static void w(String content) {
 		if (isPrint && isPrint_w) {
@@ -112,9 +101,6 @@ public class LogUtil {
 
 	/**
 	 * 使用自定义TAG打印（颜色为红色）
-	 * 
-	 * @param tag
-	 * @param content
 	 */
 	public static void e(String tag, String content) {
 		if (isPrint && isPrint_e) {
@@ -124,8 +110,6 @@ public class LogUtil {
 
 	/**
 	 * 使用默认TAG打印（颜色为红色）
-	 * 
-	 * @param content
 	 */
 	public static void e(String content) {
 		if (isPrint && isPrint_e) {
@@ -135,9 +119,6 @@ public class LogUtil {
 
 	/**
 	 * 使用自定义TAG打印（颜色为绿色）
-	 * 
-	 * @param tag
-	 * @param content
 	 */
 	public static void i(String tag, String content) {
 		if (isPrint && isPrint_i) {
@@ -147,8 +128,6 @@ public class LogUtil {
 
 	/**
 	 * 使用默认TAG打印（颜色为绿色）
-	 * 
-	 * @param content
 	 */
 	public static void i(String content) {
 		if (isPrint && isPrint_i) {

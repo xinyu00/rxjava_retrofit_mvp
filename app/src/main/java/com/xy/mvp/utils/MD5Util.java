@@ -1,6 +1,7 @@
 package com.xy.mvp.utils;
 
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * anthor:Created by tianchen on 2017/3/27.
@@ -8,30 +9,27 @@ import java.security.MessageDigest;
  */
 
 public class MD5Util {
-    public final static String MD5(String s) {
-        char hexDigits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-                'a', 'b', 'c', 'd', 'e', 'f' };
-        try {
-            byte[] btInput = s.getBytes();
-            // 获得MD5摘要算法的 MessageDigest 对象
-            MessageDigest mdInst = MessageDigest.getInstance("MD5");
-            // 使用指定的字节更新摘要
-            mdInst.update(btInput);
-            // 获得密文
-            byte[] md = mdInst.digest();
-            // 把密文转换成十六进制的字符串形式
-            int j = md.length;
-            char str[] = new char[j * 2];
-            int k = 0;
-            for (int i = 0; i < j; i++) {
-                byte byte0 = md[i];
-                str[k++] = hexDigits[byte0 >>> 4 & 0xf];
-                str[k++] = hexDigits[byte0 & 0xf];
+    public static String getEncryption(String originString){
+        String result = "";
+        if (originString != null) {
+            try {
+                // 指定加密的方式为MD5
+                MessageDigest md = MessageDigest.getInstance("MD5");
+                // 进行加密运算
+                byte bytes[] = md.digest(originString.getBytes());
+                for (byte aByte : bytes) {
+                    // 将整数转换成十六进制形式的字符串 这里与0xff进行与运算的原因是保证转换结果为32位
+                    String str = Integer.toHexString(aByte & 0xFF);
+                    if (str.length() == 1) {
+                        str += "F";
+                    }
+                    result += str;
+                }
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
             }
-            return new String(str);
-        } catch (Exception e) {
-            return null;
         }
+        return result;
     }
-
 }
+

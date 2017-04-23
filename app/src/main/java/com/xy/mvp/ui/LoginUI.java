@@ -1,6 +1,7 @@
 package com.xy.mvp.ui;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.View;
@@ -8,24 +9,23 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.xy.mvp.R;
+import com.xy.mvp.base.AppManager;
 import com.xy.mvp.base.BaseActivity;
-import com.xy.mvp.dagger.component.DaggerLoginUIComponent;
-import com.xy.mvp.dagger.module.LoginUIModule;
-import com.xy.mvp.master.AppManager;
 import com.xy.mvp.presenter.LoginUIPresenter;
+import com.xy.mvp.view.MessageDialog;
 
 import javax.inject.Inject;
 
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
- * 登陆页面
+ * 登陆页
  */
 public class LoginUI extends BaseActivity {
 
-    @InjectView(R.id.username)
+    @BindView(R.id.et_username)
     EditText mUsername;
-    @InjectView(R.id.password)
+    @BindView(R.id.et_password)
     EditText mPassword;
     private ProgressDialog dialog;
 
@@ -37,8 +37,28 @@ public class LoginUI extends BaseActivity {
         dialog = new ProgressDialog(this);
         setTopColor(Color.BLUE);
         //使用dagger2
-        DaggerLoginUIComponent component = (DaggerLoginUIComponent) DaggerLoginUIComponent.builder().loginUIModule(new LoginUIModule(this)).build();
-        component.in(this);
+        MessageDialog.getInstance().showDialog("测试1");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        MessageDialog.getInstance().showDialog("测试2", new MessageDialog.BackListener() {
+                            @Override
+                            public void doBack() {
+                                startActivity(new Intent(LoginUI.this, NavigateUI.class));
+                            }
+                        });
+                    }
+                });
+            }
+        }).start();
     }
 
     //按钮点击
@@ -56,12 +76,8 @@ public class LoginUI extends BaseActivity {
     }
 
     private boolean checkUserInfo(String username, String password) {
-        if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
-            return false;
-        }
-        return true;
+        return !TextUtils.isEmpty(username) || !TextUtils.isEmpty(password);
     }
-
     public void success() {
         dialog.dismiss();
         Toast.makeText(LoginUI.this, "欢迎回来：" + mUsername.getText().toString(), Toast.LENGTH_SHORT).show();
@@ -79,7 +95,7 @@ public class LoginUI extends BaseActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_main;
+        return R.layout.activity_login;
     }
 
     @Override

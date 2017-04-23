@@ -1,0 +1,63 @@
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+ext {
+    //Android
+    androidBuildToolsVersion = "24.0.1"
+    androidMinSdkVersion = 15
+    androidTargetSdkVersion = 21
+    androidCompileSdkVersion = 21
+
+    //Libraries
+    appcompatVersion = '25.3.1'
+    rxjavaVersion = '2.0.6'
+    rxandroidVersion = '2.0.1'
+    retrofitVersion = '2.2.0'
+    loggingVersion = '3.6.0'
+    scalarsVersion = '2.2.0'
+    adapterRxjavaVersion = '2.2.0'
+    butterknifeVersion = '8.5.1'
+    butterknifeCompilerVersion = '8.5.1'
+    daggerVersion = '2.6'
+    ormliteVersion = '5.0'
+    fastjsonVersion = '1.2.24'
+    daggerCompilerVersion = '2.6'
+    glideVersion = '3.7.0'
+
+    //Testing
+    jUnitVersion = '4.12'
+    testingSupportLibVersion = '0.1'
+    espressoVersion = "2.2.2"
+
+    //Development
+    leakCanaryVersion = '1.5'
+
+    appDependencies = [
+            appcompatV7             : "com.android.support:appcompat-v7:${appcompatVersion}",
+            rxjava                  : "io.reactivex.rxjava2:rxjava:${rxjavaVersion}",
+            rxandroid               : "io.reactivex.rxjava2:rxandroid:${rxandroidVersion}",
+            retrofit                : "com.squareup.retrofit2:retrofit:${retrofitVersion}",
+            okhttpLogging           : "com.squareup.okhttp3:logging-interceptor:${loggingVersion}",
+            retrofitConverterScalars: "com.squareup.retrofit2:converter-scalars:${scalarsVersion}",
+            retrofitAdapterRxjava   : "com.squareup.retrofit2:adapter-rxjava2:${adapterRxjavaVersion}",
+            butterknife             : "com.jakewharton:butterknife:${butterknifeVersion}",
+            butterknifeCompiler     : "com.jakewharton:butterknife-compiler:${butterknifeCompilerVersion}",
+            dagger                  : "com.google.dagger:dagger:${daggerVersion}",
+            ormlite                 : "com.j256.ormlite:ormlite-android:${ormliteVersion}",
+            fastjson                : "com.alibaba:fastjson:${fastjsonVersion}",
+            daggerCompiler          : "com.google.dagger:dagger-compiler:${daggerCompilerVersion}",
+            glide                   : "com.github.bumptech.glide:glide:${glideVersion}"
+    ]
+
+    appTestDependencies = [
+            junit            : "junit:junit:${jUnitVersion}",
+            espresso         : "com.android.support.test.espresso:espresso-core:${espressoVersion}",
+            testingSupportLib: "com.android.support.test:testing-support-lib:${testingSupportLibVersion}"
+    ]
+    developmentDependencies = [
+            leakCanary: "com.squareup.leakcanary:leakcanary-android:${leakCanaryVersion}",
+    ]
+}

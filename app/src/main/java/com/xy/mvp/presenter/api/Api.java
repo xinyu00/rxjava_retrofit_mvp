@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.SparseArray;
 
-import com.xy.mvp.master.ProApplication;
+import com.xy.mvp.base.AndroidApplication;
 import com.xy.mvp.utils.NetWorkUtils;
 
 import java.io.File;
@@ -77,7 +77,7 @@ public class Api {
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
         logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         //缓存
-        File cacheFile = new File(ProApplication.getInstance().getCacheDir(), "cache");
+        File cacheFile = new File(AndroidApplication.getInstance().getCacheDir(), "cache");
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 100); //100Mb
         //增加头部信息
         Interceptor headerInterceptor =new Interceptor() {
@@ -127,7 +127,7 @@ public class Api {
      */
     @NonNull
     public static String getCacheControl() {
-        return NetWorkUtils.isNetConnected(ProApplication.getInstance()) ? CACHE_CONTROL_AGE : CACHE_CONTROL_CACHE;
+        return NetWorkUtils.isNetConnected(AndroidApplication.getInstance()) ? CACHE_CONTROL_AGE : CACHE_CONTROL_CACHE;
     }
 
     /**
@@ -139,13 +139,13 @@ public class Api {
         public Response intercept(Chain chain) throws IOException {
             Request request = chain.request();
             String cacheControl = request.cacheControl().toString();
-            if (!NetWorkUtils.isNetConnected(ProApplication.getInstance())) {
+            if (!NetWorkUtils.isNetConnected(AndroidApplication.getInstance())) {
                 request = request.newBuilder()
                         .cacheControl(TextUtils.isEmpty(cacheControl)? CacheControl.FORCE_NETWORK: CacheControl.FORCE_CACHE)
                         .build();
             }
             Response originalResponse = chain.proceed(request);
-            if (NetWorkUtils.isNetConnected(ProApplication.getInstance())) {
+            if (NetWorkUtils.isNetConnected(AndroidApplication.getInstance())) {
                 //有网的时候读接口上的@Headers里的配置，你可以在这里进行统一的设置
 
                 return originalResponse.newBuilder()

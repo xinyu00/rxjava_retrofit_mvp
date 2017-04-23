@@ -1,6 +1,5 @@
 package com.xy.mvp.presenter;
 
-import com.xy.mvp.base.BaseActivityPresenter;
 import com.xy.mvp.ui.IndexUI;
 
 /**
@@ -8,10 +7,10 @@ import com.xy.mvp.ui.IndexUI;
  * email:963181974@qq.com
  */
 
-public class IndexUIPresenter extends BaseActivityPresenter<IndexUI> {
+public class IndexUIPresenter{
 
     public IndexUIPresenter(IndexUI activity) {
-        super(activity);
+
     }
 
 }
