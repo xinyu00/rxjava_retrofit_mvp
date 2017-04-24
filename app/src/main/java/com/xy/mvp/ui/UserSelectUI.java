@@ -5,8 +5,6 @@ import android.widget.Button;
 
 import com.xy.mvp.R;
 import com.xy.mvp.base.BaseActivity;
-import com.xy.mvp.utils.LogUtil;
-import com.xy.mvp.utils.NetWorkUtils;
 
 import butterknife.OnClick;
 
@@ -19,7 +17,7 @@ public class UserSelectUI extends BaseActivity {
 
     @Override
     public void initData() {
-        LogUtil.e("IP地址", NetWorkUtils.getIPAddress(this));
+
     }
 
     @Override

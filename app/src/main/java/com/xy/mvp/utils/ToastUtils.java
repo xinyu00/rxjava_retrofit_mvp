@@ -16,7 +16,15 @@ public class ToastUtils {
         throw new UnsupportedOperationException("cannot be instantiated");
     }
 
-    public static boolean isShow = true;
+    private static boolean isShow() {
+        return isShow;
+    }
+
+    public static void setIsShow(boolean flag) {
+        isShow = flag;
+    }
+
+    private static boolean isShow = true;
 
     private static Activity getActivity(){
         return AppManager.getAppManager().currentActivity();
@@ -26,7 +34,7 @@ public class ToastUtils {
      * 短时间显示Toast
      */
     public static void showShort(CharSequence message) {
-        if (isShow)
+        if (isShow())
             Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
@@ -34,7 +42,7 @@ public class ToastUtils {
      * 短时间显示Toast
      */
     public static void showShort(int message) {
-        if (isShow)
+        if (isShow())
             Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
@@ -42,7 +50,7 @@ public class ToastUtils {
      * 长时间显示Toast
      */
     public static void showLong(CharSequence message) {
-        if (isShow)
+        if (isShow())
             Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
     }
 
@@ -50,7 +58,7 @@ public class ToastUtils {
      * 长时间显示Toast
      */
     public static void showLong(int message) {
-        if (isShow)
+        if (isShow())
             Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
     }
 
@@ -58,7 +66,7 @@ public class ToastUtils {
      * 自定义显示Toast时间
      */
     public static void show(CharSequence message, int duration) {
-        if (isShow)
+        if (isShow())
             Toast.makeText(getActivity(), message, duration).show();
     }
 
@@ -66,7 +74,7 @@ public class ToastUtils {
      * 自定义显示Toast时间
      */
     public static void show(int message, int duration) {
-        if (isShow)
+        if (isShow())
             Toast.makeText(getActivity(), message, duration).show();
     }
 
@@ -75,7 +83,7 @@ public class ToastUtils {
      * 自定义显示位置 居中
      */
     public static void centershow(CharSequence message) {
-        if (isShow) {
+        if (isShow()) {
             Toast toast = Toast.makeText(getActivity(), message, Toast.LENGTH_LONG);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();

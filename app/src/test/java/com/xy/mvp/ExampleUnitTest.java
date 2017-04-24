@@ -1,8 +1,8 @@
 package com.xy.mvp;
 
-import com.xy.mvp.utils.NetWorkUtils;
-
 import org.junit.Test;
+
+import java.util.Stack;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -12,5 +12,9 @@ import org.junit.Test;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
+        Stack<String> stack = new Stack<>();
+        stack.add("wc1");
+        stack.add("wc2");
+        stack.add("wc3");
     }
 }

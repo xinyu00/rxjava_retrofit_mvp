@@ -106,7 +106,6 @@ public abstract class BaseActivity extends AppCompatActivity {
             top.setBackgroundColor(Color.BLUE);
             ll_content.addView(top);
         }
-
     }
 
     /**
@@ -169,7 +168,8 @@ public abstract class BaseActivity extends AppCompatActivity {
             ToastUtils.showShort("再按一次返回键退出程序");
         } else {
             // 退出
-            appManager.finishAllActivity();
+            ToastUtils.setIsShow(false);
+            appManager.AppExit();
         }
     }
 

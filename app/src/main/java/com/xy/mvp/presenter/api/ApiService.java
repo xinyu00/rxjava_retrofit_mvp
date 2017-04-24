@@ -5,6 +5,7 @@ import com.xy.mvp.utils.Constant;
 import io.reactivex.Flowable;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 /**
@@ -35,4 +36,10 @@ public interface ApiService {
                     int role,
             @Query("type")
                     int type);
+
+    @GET(Constant.TAOBAOURL)
+    public Flowable<String> getIp(
+            @Query("ip")
+                    String ip);
+
 }

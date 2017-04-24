@@ -3,16 +3,20 @@ package com.xy.mvp.utils;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 
-import java.net.Inet4Address;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.util.Enumeration;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.xy.mvp.presenter.api.Api;
+import com.xy.mvp.presenter.api.HostType;
+
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * anthor:Created by tianchen on 2017/3/27.
@@ -69,34 +73,38 @@ public class NetWorkUtils {
         return matcher.matches();
     }
 
-    public static String getIPAddress(Context context) {
-        NetworkInfo info = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
-        if (info != null && info.isConnected()) {
-            if (info.getType() == ConnectivityManager.TYPE_MOBILE) {//当前使用2G/3G/4G网络
-                try {
-                    for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements(); ) {
-                        NetworkInterface intf = en.nextElement();
-                        for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
-                            InetAddress inetAddress = enumIpAddr.nextElement();
-                            if (!inetAddress.isLoopbackAddress() && inetAddress instanceof Inet4Address) {
-                                return inetAddress.getHostAddress();
-                            }
-                        }
+    public static void getIPAddress(final AddressIp addressIp) {
+        Api.getDefault(HostType.TYPE1,Constant.TAOBAOURL)
+                .getIp("myip")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<String>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        ToastUtils.showShort(e.toString());
                     }
-                } catch (SocketException e) {
-                    e.printStackTrace();
-                }
 
-            } else if (info.getType() == ConnectivityManager.TYPE_WIFI) {//当前使用无线网络
-                WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-                WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-                String ipAddress = intIP2StringIP(wifiInfo.getIpAddress());//得到IPV4地址
-                return ipAddress;
-            }
-        } else {
-            ToastUtils.showShort("当前无网络连接,请在设置中打开网络");
-        }
-        return null;
+                    @Override
+                    public void onComplete() {
+
+                    }
+
+                    @Override
+                    public void onSubscribe(Subscription s) {
+                        s.request(Long.MAX_VALUE);
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+                        JSONObject jsonObject = JSON.parseObject(s);
+                        JSONObject data = jsonObject.getJSONObject("data");
+                        String ip = data.getString("ip");
+                        addressIp.getIp(ip);
+                    }
+                });
+    }
+    public interface AddressIp{
+        void getIp(String ip);
     }
 
     /**
