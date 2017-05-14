@@ -24,9 +24,9 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 /**
- * des:retorfit api
- * Created by xsf
- * on 2016.06.15:47
+ * anthor:Created by tianchen on 2017/5/14.
+ * email:963181974@qq.com
+ * Retrofit Api
  */
 public class Api {
     //读超时长，单位：毫秒
@@ -72,7 +72,7 @@ public class Api {
 
 
     //构造方法私有
-    private Api(int hostType,String baseUrl) {
+    private Api(int hostType, String baseUrl) {
         //开启Log
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
         logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -80,7 +80,7 @@ public class Api {
         File cacheFile = new File(AndroidApplication.getInstance().getCacheDir(), "cache");
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 100); //100Mb
         //增加头部信息
-        Interceptor headerInterceptor =new Interceptor() {
+        Interceptor headerInterceptor = new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request build = chain.request().newBuilder()
@@ -112,10 +112,10 @@ public class Api {
     /**
      * @param hostType 设置URL缓存类型
      */
-    public static ApiService getDefault(int hostType,String baseUrl) {
+    public static ApiService getDefault(int hostType, String baseUrl) {
         Api retrofitManager = sRetrofitManager.get(hostType);
         if (retrofitManager == null) {
-            retrofitManager = new Api(hostType,baseUrl);
+            retrofitManager = new Api(hostType, baseUrl);
             sRetrofitManager.put(hostType, retrofitManager);
         }
         return retrofitManager.movieService;
@@ -141,7 +141,7 @@ public class Api {
             String cacheControl = request.cacheControl().toString();
             if (!NetWorkUtils.isNetConnected(AndroidApplication.getInstance())) {
                 request = request.newBuilder()
-                        .cacheControl(TextUtils.isEmpty(cacheControl)? CacheControl.FORCE_NETWORK: CacheControl.FORCE_CACHE)
+                        .cacheControl(TextUtils.isEmpty(cacheControl) ? CacheControl.FORCE_NETWORK : CacheControl.FORCE_CACHE)
                         .build();
             }
             Response originalResponse = chain.proceed(request);

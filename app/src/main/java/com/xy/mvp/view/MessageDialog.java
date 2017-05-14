@@ -33,7 +33,7 @@ public class MessageDialog extends Dialog implements View.OnClickListener {
     }
 
     private MessageDialog() {
-        this(AppManager.getAppManager().currentActivity(), R.style.hintdialog);
+        this(AppManager.getAppManager().currentActivity(), R.style.Hintdialog);
     }
 
     private MessageDialog(Context context, int themeResId) {

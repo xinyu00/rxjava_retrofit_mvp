@@ -1,4 +1,4 @@
-package com.xy.mvp.ui;
+package com.xy.mvp.ui.user;
 
 import android.app.ProgressDialog;
 import android.text.TextUtils;
@@ -7,7 +7,7 @@ import android.widget.EditText;
 import com.xy.mvp.R;
 import com.xy.mvp.base.BaseActivity;
 import com.xy.mvp.dagger.component.DaggerActivityComponent;
-import com.xy.mvp.presenter.RegisterUIPresenter;
+import com.xy.mvp.presenter.user.RegisterUIPresenter;
 import com.xy.mvp.utils.ToastUtils;
 
 import javax.inject.Inject;

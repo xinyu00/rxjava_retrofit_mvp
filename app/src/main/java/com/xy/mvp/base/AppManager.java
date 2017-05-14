@@ -20,7 +20,6 @@ public class AppManager {
     /**
      * 单一实例化当前对象
      *
-     * @return
      */
     public static AppManager getAppManager() {
         if (instance == null) {
@@ -38,7 +37,7 @@ public class AppManager {
      */
     public void addActivity(Activity activity) {
         if (activityStack == null) {
-            activityStack = new Stack<Activity>();
+            activityStack = new Stack<>();
         }
         activityStack.add(activity);
     }
@@ -47,21 +46,18 @@ public class AppManager {
      * 获取当前Activity (堆栈中最后一个压入的)
      */
     public Activity currentActivity() {
-        Activity activity = activityStack.lastElement();
-        return activity;
+        return activityStack.lastElement();
     }
 
     /**
      * 结束当前Activity(堆栈中最后一个压入的)
      */
     public void finishActivity() {
-        Activity activity = activityStack.lastElement();
-        finishActivity(activity);
+        finishActivity(currentActivity());
     }
 
     /**
      * 结束指定的Activity
-     *
      * @param activity 要结束的Activity
      */
     public void finishActivity(Activity activity) {
@@ -74,8 +70,6 @@ public class AppManager {
 
     /**
      * 结束指定类名的Activity
-     *
-     * @param cls
      */
     public void finishActivity(Class<?> cls) {
         for (Activity activity : activityStack) {
@@ -89,8 +83,8 @@ public class AppManager {
     /**
      * 结束所有Activity
      */
-    public void finishAllActivity() {
-        for (int i = 0;i < activityStack.size(); i++) {
+    private void finishAllActivity() {
+        for (int i = 0; i < activityStack.size(); i++) {
             if (null != activityStack.get(i)) {
                 activityStack.get(i).finish();
             }
@@ -101,7 +95,7 @@ public class AppManager {
     /**
      * 获取指定的Activity
      */
-    public static Activity getActivity(Class<?> cls) {
+    public Activity getActivity(Class<?> cls) {
         if (activityStack != null) {
             for (Activity activity : activityStack) {
                 if (activity.getClass().equals(cls)) {
@@ -121,7 +115,7 @@ public class AppManager {
             android.os.Process.killProcess(android.os.Process.myPid());
             System.exit(0);
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 }

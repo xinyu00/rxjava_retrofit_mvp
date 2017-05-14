@@ -17,16 +17,12 @@ ext {
     rxandroidVersion = '2.0.1'
     retrofitVersion = '2.2.0'
     loggingVersion = '3.6.0'
-    scalarsVersion = '2.2.0'
-    adapterRxjavaVersion = '2.2.0'
     butterknifeVersion = '8.5.1'
-    butterknifeCompilerVersion = '8.5.1'
     daggerVersion = '2.6'
     ormliteVersion = '5.0'
     fastjsonVersion = '1.2.24'
-    daggerCompilerVersion = '2.6'
-    glideVersion = '3.7.0'
-
+    frescoVersion = '1.3.0'
+    greendaoVersion = '3.2.2'
     //Testing
     jUnitVersion = '4.12'
     testingSupportLibVersion = '0.1'
@@ -37,19 +33,23 @@ ext {
 
     appDependencies = [
             appcompatV7             : "com.android.support:appcompat-v7:${appcompatVersion}",
+            design                  : "com.android.support:design:${appcompatVersion}",
+            recyclerview            : "com.android.support:recyclerview-v7:${appcompatVersion}",
             rxjava                  : "io.reactivex.rxjava2:rxjava:${rxjavaVersion}",
             rxandroid               : "io.reactivex.rxjava2:rxandroid:${rxandroidVersion}",
             retrofit                : "com.squareup.retrofit2:retrofit:${retrofitVersion}",
             okhttpLogging           : "com.squareup.okhttp3:logging-interceptor:${loggingVersion}",
-            retrofitConverterScalars: "com.squareup.retrofit2:converter-scalars:${scalarsVersion}",
-            retrofitAdapterRxjava   : "com.squareup.retrofit2:adapter-rxjava2:${adapterRxjavaVersion}",
+            retrofitConverterScalars: "com.squareup.retrofit2:converter-scalars:${retrofitVersion}",
+            retrofitAdapterRxjava   : "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}",
             butterknife             : "com.jakewharton:butterknife:${butterknifeVersion}",
-            butterknifeCompiler     : "com.jakewharton:butterknife-compiler:${butterknifeCompilerVersion}",
+            butterknifeCompiler     : "com.jakewharton:butterknife-compiler:${butterknifeVersion}",
             dagger                  : "com.google.dagger:dagger:${daggerVersion}",
+            daggerCompiler          : "com.google.dagger:dagger-compiler:${daggerVersion}",
             ormlite                 : "com.j256.ormlite:ormlite-android:${ormliteVersion}",
             fastjson                : "com.alibaba:fastjson:${fastjsonVersion}",
-            daggerCompiler          : "com.google.dagger:dagger-compiler:${daggerCompilerVersion}",
-            glide                   : "com.github.bumptech.glide:glide:${glideVersion}"
+            fresco                  : "com.facebook.fresco:fresco:${frescoVersion}",
+            greendao                : "org.greenrobot:greendao-generator:${greendaoVersion}",
+            greendaoGenerator       : "org.greenrobot:greendao-generator:${greendaoVersion}"
     ]
 
     appTestDependencies = [

@@ -1,4 +1,4 @@
-package com.xy.mvp.presenter;
+package com.xy.mvp.presenter.user;
 
 import com.alibaba.fastjson.JSON;
 import com.xy.mvp.dagger.PerActivity;
@@ -6,7 +6,7 @@ import com.xy.mvp.model.net.ResponseInfo;
 import com.xy.mvp.presenter.api.Api;
 import com.xy.mvp.presenter.api.ApiService;
 import com.xy.mvp.presenter.api.HostType;
-import com.xy.mvp.ui.RegisterUI;
+import com.xy.mvp.ui.user.RegisterUI;
 import com.xy.mvp.utils.Constant;
 import com.xy.mvp.utils.NetWorkUtils;
 

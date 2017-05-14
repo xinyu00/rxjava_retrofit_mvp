@@ -2,9 +2,11 @@ package com.xy.mvp.dagger.module;
 
 import android.app.Activity;
 
+import com.xy.mvp.base.BaseActivity;
 import com.xy.mvp.dagger.PerActivity;
-import com.xy.mvp.presenter.RegisterUIPresenter;
-import com.xy.mvp.ui.RegisterUI;
+import com.xy.mvp.presenter.BaseActivityPresenter;
+import com.xy.mvp.presenter.user.RegisterUIPresenter;
+import com.xy.mvp.ui.user.RegisterUI;
 
 import dagger.Module;
 import dagger.Provides;
@@ -28,7 +30,12 @@ public class ActivityModule {
     }
 
     @Provides @PerActivity
-    public RegisterUIPresenter provideDaggerPresenter() {
+    RegisterUIPresenter provideRegisterPresenter() {
         return new RegisterUIPresenter((RegisterUI) activity());
+    }
+
+    @Provides @PerActivity
+    BaseActivityPresenter provideBasePresenter() {
+        return new BaseActivityPresenter((BaseActivity) activity());
     }
 }

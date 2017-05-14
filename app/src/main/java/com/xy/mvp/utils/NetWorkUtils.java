@@ -96,6 +96,7 @@ public class NetWorkUtils {
 
                     @Override
                     public void onNext(String s) {
+                        LogUtil.e("NetWorkUtils","------"+s);
                         JSONObject jsonObject = JSON.parseObject(s);
                         JSONObject data = jsonObject.getJSONObject("data");
                         String ip = data.getString("ip");
@@ -103,6 +104,7 @@ public class NetWorkUtils {
                     }
                 });
     }
+
     public interface AddressIp{
         void getIp(String ip);
     }

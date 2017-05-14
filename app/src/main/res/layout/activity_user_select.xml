@@ -5,7 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="com.xy.mvp.ui.UserSelectUI">
+    tools:context="com.xy.mvp.ui.user.UserSelectUI">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/iv_content"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
+        android:layout_centerInParent="true"
+        android:scaleType="center" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/iv_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/android" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,22 +30,24 @@
 
         <Button
             android:id="@+id/bt_login"
+            style="@style/ButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin"
             android:layout_weight="1"
-            android:background="@drawable/shape_login_button"
+            android:background="@drawable/shape_white_button"
             android:text="@string/login"
             android:textColor="@color/black"
             android:textSize="@dimen/icon_text" />
 
         <Button
             android:id="@+id/bt_new_user"
+            style="@style/ButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin"
             android:layout_weight="1"
-            android:background="@drawable/shape_newuser_button"
+            android:background="@drawable/shape_blue_button"
             android:text="@string/new_user"
             android:textColor="@color/white"
             android:textSize="@dimen/icon_text" />

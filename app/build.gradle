@@ -2,10 +2,10 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "24.0.3"
+    buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.xy.mvp"
-        minSdkVersion 14
+        minSdkVersion 21
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -38,10 +38,8 @@ dependencies {
     def appDependencies = rootProject.ext.appDependencies
     def appTestDependencies = rootProject.ext.appTestDependencies
     def developmentDependencies = rootProject.ext.developmentDependencies
-
     //导入libs文件夹下全部的jar包
     compile fileTree(include: ['*.jar'], dir: 'libs')
-
     /**
      * 测试框架
      */
@@ -53,34 +51,33 @@ dependencies {
     /**
      * 第三方依赖
      */
-    //v7包
+    //v7相关
     compile appDependencies.appcompatV7
-    //rxjava2.x依赖
+    compile appDependencies.design
+    compile appDependencies.recyclerview
+    //rx系列依赖
     compile appDependencies.rxjava
-    //rxandroid2.x依赖
     compile appDependencies.rxandroid
     //retrofit依赖
     compile appDependencies.retrofit
+    compile appDependencies.retrofitConverterScalars
+    compile appDependencies.retrofitAdapterRxjava
     //okhttp3的log
     compile appDependencies.okhttpLogging
-    //retrofit和string关联
-    compile appDependencies.retrofitConverterScalars
-    //将rxjava2.x和retrofit关联
-    compile appDependencies.retrofitAdapterRxjava
     //butterknife注解框架
     compile appDependencies.butterknife
-    // Dagger2注入框架
-    compile appDependencies.dagger
-    // 添加OrmLite依赖
-    compile appDependencies.ormlite
+    annotationProcessor appDependencies.butterknifeCompiler
+    // 添加greendao依赖
+    compile appDependencies.greendao
+    compile appDependencies.greendaoGenerator
     //添加json解析工具fastjson
     compile appDependencies.fastjson
     // 图片加载glide
-    compile appDependencies.glide
-    // 使用annotationProcessor插件为Dagger2生成代码
+    compile appDependencies.fresco
+    // Dagger2注入框架
+    compile appDependencies.dagger
     annotationProcessor appDependencies.daggerCompiler
-    // 使用annotationProcessor插件为ButterKnife生成代码
-    annotationProcessor appDependencies.butterknifeCompiler
+
     /**
      * 环境检查工具
      */

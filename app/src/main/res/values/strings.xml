@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">MvpFrame</string>
-    <string name="title_activity_base2">Base2Activity</string>
-    <string name="title_activity_index_ui">IndexUI</string>
-    <string name="login">登陆</string>
+    <string name="login">登录</string>
     <string name="new_user">新用户</string>
+    <string name="android">Android</string>
+    <string name="password">密码</string>
+    <string name="username">昵称/手机号/邮箱</string>
+    <string name="register">注册</string>
+    <string name="phone">手机号</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.xy.mvp.presenter;
+package com.xy.mvp.presenter.user;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -7,7 +7,7 @@ import com.xy.mvp.dagger.PerActivity;
 import com.xy.mvp.presenter.api.Api;
 import com.xy.mvp.presenter.api.ApiService;
 import com.xy.mvp.presenter.api.HostType;
-import com.xy.mvp.ui.LoginUI;
+import com.xy.mvp.ui.user.LoginUI;
 import com.xy.mvp.utils.Constant;
 
 import org.reactivestreams.Subscriber;

@@ -1,7 +1,6 @@
-package com.xy.mvp.ui;
+package com.xy.mvp.ui.user;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.View;
@@ -9,10 +8,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.xy.mvp.R;
-import com.xy.mvp.base.AppManager;
 import com.xy.mvp.base.BaseActivity;
-import com.xy.mvp.presenter.LoginUIPresenter;
-import com.xy.mvp.view.MessageDialog;
+import com.xy.mvp.presenter.user.LoginUIPresenter;
 
 import javax.inject.Inject;
 
@@ -35,37 +32,13 @@ public class LoginUI extends BaseActivity {
     @Override
     public void initData() {
         dialog = new ProgressDialog(this);
-        setTopColor(Color.BLUE);
-        //使用dagger2
-        MessageDialog.getInstance().showDialog("测试1");
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        MessageDialog.getInstance().showDialog("测试2", new MessageDialog.BackListener() {
-                            @Override
-                            public void doBack() {
-                                startActivity(new Intent(LoginUI.this, NavigateUI.class));
-                            }
-                        });
-                    }
-                });
-            }
-        }).start();
+        baseActivityPresenter.setTopColor(Color.BLUE);
     }
 
     //按钮点击
     public void login(View view) {
         String username = mUsername.getText().toString();
         String password = mPassword.getText().toString();
-        AppManager.getActivity(this.getClass());
         boolean checkUserInfo = checkUserInfo(username, password);
         if (checkUserInfo) {
             dialog.show();
@@ -78,6 +51,7 @@ public class LoginUI extends BaseActivity {
     private boolean checkUserInfo(String username, String password) {
         return !TextUtils.isEmpty(username) || !TextUtils.isEmpty(password);
     }
+
     public void success() {
         dialog.dismiss();
         Toast.makeText(LoginUI.this, "欢迎回来：" + mUsername.getText().toString(), Toast.LENGTH_SHORT).show();

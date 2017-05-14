@@ -12,7 +12,7 @@ public class IndexUI extends BaseActivity {
 
     @Override
     public void initView() {
-        setTopColor(Color.GREEN);
+        baseActivityPresenter.setTopColor(Color.GREEN);
     }
 
     @Override
