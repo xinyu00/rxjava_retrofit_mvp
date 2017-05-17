@@ -62,7 +62,7 @@ public class RegisterUI extends BaseActivity{
 
     public void failed(String msg) {
         dialog.dismiss();
-        ToastUtils.showShort(msg);
+        ToastUtils.errorShow(msg);
     }
 
     @OnClick(R.id.bt_register)

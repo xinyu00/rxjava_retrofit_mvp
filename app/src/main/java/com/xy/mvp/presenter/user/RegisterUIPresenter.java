@@ -2,13 +2,12 @@ package com.xy.mvp.presenter.user;
 
 import com.alibaba.fastjson.JSON;
 import com.xy.mvp.dagger.PerActivity;
-import com.xy.mvp.model.net.ResponseInfo;
+import com.xy.mvp.entity.ResponseInfo;
 import com.xy.mvp.presenter.api.Api;
 import com.xy.mvp.presenter.api.ApiService;
 import com.xy.mvp.presenter.api.HostType;
 import com.xy.mvp.ui.user.RegisterUI;
-import com.xy.mvp.utils.Constant;
-import com.xy.mvp.utils.NetWorkUtils;
+import com.xy.mvp.utils.ConstantUtils;
 
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
@@ -17,8 +16,6 @@ import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-
-import static com.xy.mvp.utils.NetWorkUtils.getIPAddress;
 
 /**
  * anthor:Created by tianchen on 2017/4/23.
@@ -31,46 +28,41 @@ public class RegisterUIPresenter  {
     @Inject
     public RegisterUIPresenter(RegisterUI activity) {
         this.activity = activity;
-        api = Api.getDefault(HostType.TYPE1, Constant.BASEURL);
+        api = Api.getDefault(HostType.TYPE1, ConstantUtils.BASEURL);
     }
 
     /**
      * 用户注册
      */
     public void register(final String phone,final String password) {
-        getIPAddress(new NetWorkUtils.AddressIp() {
-            @Override
-            public void getIp(String ip) {
-                api.register(phone, password,ip,0, 0)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Subscriber<String>() {
-                            @Override
-                            public void onError(Throwable e) {
-                                activity.failed(e.toString());
-                            }
+        api.register(phone, password,0, 0)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<String>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        activity.failed(e.toString());
+                    }
 
-                            @Override
-                            public void onComplete() {
+                    @Override
+                    public void onComplete() {
 
-                            }
+                    }
 
-                            @Override
-                            public void onSubscribe(Subscription s) {
-                                s.request(Long.MAX_VALUE);
-                            }
+                    @Override
+                    public void onSubscribe(Subscription s) {
+                        s.request(Long.MAX_VALUE);
+                    }
 
-                            @Override
-                            public void onNext(String s) {
-                                ResponseInfo info = JSON.parseObject(s,ResponseInfo.class);
-                                if ("0".equals(info.code)){
-                                    activity.success(info.msg);
-                                }else {
-                                    activity.failed(info.msg);
-                                }
-                            }
-                        });
-            }
-        });
+                    @Override
+                    public void onNext(String s) {
+                        ResponseInfo info = JSON.parseObject(s,ResponseInfo.class);
+                        if ("0".equals(info.code)){
+                            activity.success(info.msg);
+                        }else {
+                            activity.failed(info.msg);
+                        }
+                    }
+                });
     }
 }

@@ -12,7 +12,7 @@ ext {
     androidCompileSdkVersion = 21
 
     //Libraries
-    appcompatVersion = '25.3.1'
+    appcompatVersion = '25.0.0'
     rxjavaVersion = '2.0.6'
     rxandroidVersion = '2.0.1'
     retrofitVersion = '2.2.0'

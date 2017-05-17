@@ -1,7 +1,5 @@
 package com.xy.mvp.ui;
 
-import android.graphics.Color;
-
 import com.xy.mvp.R;
 import com.xy.mvp.base.BaseActivity;
 
@@ -12,7 +10,7 @@ public class IndexUI extends BaseActivity {
 
     @Override
     public void initView() {
-        baseActivityPresenter.setTopColor(Color.GREEN);
+        setTopColor(R.color.colorAccent);
     }
 
     @Override
@@ -24,6 +22,5 @@ public class IndexUI extends BaseActivity {
     public int getLayoutId() {
         return R.layout.activity_index;
     }
-
 
 }

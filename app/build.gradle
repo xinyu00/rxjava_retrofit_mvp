@@ -77,7 +77,6 @@ dependencies {
     // Dagger2注入框架
     compile appDependencies.dagger
     annotationProcessor appDependencies.daggerCompiler
-
     /**
      * 环境检查工具
      */

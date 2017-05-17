@@ -1,6 +1,6 @@
-package com.xy.mvp.bean;
+package com.xy.mvp.entity;
 
-public class User {
+public class UserEntity {
     private int userId;     // 用户id
     private String userName; // 用户名
     private String userPwd; // 用户密码

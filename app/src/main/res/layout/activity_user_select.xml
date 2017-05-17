@@ -17,7 +17,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/iv_content"
+        android:layout_below="@id/iv_content"
         android:layout_centerHorizontal="true"
         android:text="@string/android" />
 

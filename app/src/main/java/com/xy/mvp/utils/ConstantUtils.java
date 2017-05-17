@@ -5,10 +5,10 @@ package com.xy.mvp.utils;
  * email:963181974@qq.com
  */
 // 常量放置类
-public interface Constant {
+public interface ConstantUtils {
     //IP
-    String BASEURL = "http://192.168.73.23:8080";
-//    String BASEURL = "http://thefishissalty.vicp.io";
+//    String BASEURL = "http://192.168.178.81:8080";
+    String BASEURL = "http://thefishissalty.vicp.io";
     // 登陆
     String USER = "/user?";
 

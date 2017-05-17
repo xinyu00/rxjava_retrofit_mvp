@@ -1,6 +1,6 @@
 package com.xy.mvp.db.impl;
 
-import com.xy.mvp.bean.User;
+import com.xy.mvp.entity.UserEntity;
 import com.xy.mvp.db.dao.UserDao;
 
 /**
@@ -11,27 +11,27 @@ import com.xy.mvp.db.dao.UserDao;
 public class UserImpl implements UserDao {
 
     @Override
-    public void addUser(User user) {
+    public void addUser(UserEntity user) {
 
     }
 
     @Override
-    public User getUser(int userId) {
+    public UserEntity getUser(int userId) {
         return null;
     }
 
     @Override
-    public void update(User user) {
+    public void update(UserEntity user) {
 
     }
 
     @Override
-    public void delete(User user) {
+    public void delete(UserEntity user) {
 
     }
 
     @Override
-    public User findUser(String userName) {
+    public UserEntity findUser(String userName) {
         return null;
     }
 }

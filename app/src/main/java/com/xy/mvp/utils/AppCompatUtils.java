@@ -5,10 +5,10 @@ import android.content.Context;
 /**
  * anthor:Created by tianchen on 2017/3/28.
  * email:963181974@qq.com
- * 适配工具类
+ * App兼容适配工具类
  */
 
-public class AdapterUtil {
+public class AppCompatUtils {
     /**
      * dp转换px
      *

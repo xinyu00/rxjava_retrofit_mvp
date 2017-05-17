@@ -1,4 +1,4 @@
-package com.xy.mvp.model.net;
+package com.xy.mvp.entity;
 
 /**
  * anthor:Created by tianchen on 2017/2/13.

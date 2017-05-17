@@ -1,7 +1,6 @@
 package com.xy.mvp.ui.user;
 
 import android.app.ProgressDialog;
-import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -9,6 +8,7 @@ import android.widget.Toast;
 
 import com.xy.mvp.R;
 import com.xy.mvp.base.BaseActivity;
+import com.xy.mvp.dagger.component.DaggerActivityComponent;
 import com.xy.mvp.presenter.user.LoginUIPresenter;
 
 import javax.inject.Inject;
@@ -32,7 +32,8 @@ public class LoginUI extends BaseActivity {
     @Override
     public void initData() {
         dialog = new ProgressDialog(this);
-        baseActivityPresenter.setTopColor(Color.BLUE);
+        initInject();
+        setTopColor(R.color.colorAccent);
     }
 
     //按钮点击
@@ -46,6 +47,13 @@ public class LoginUI extends BaseActivity {
         } else {
             Toast.makeText(LoginUI.this, "用户名或密码不能为空", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void initInject() {
+        DaggerActivityComponent.builder()
+                .activityModule(getActivityModule())
+                .build()
+                .inject(this);
     }
 
     private boolean checkUserInfo(String username, String password) {

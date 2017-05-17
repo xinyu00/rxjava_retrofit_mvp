@@ -8,7 +8,7 @@ import java.security.NoSuchAlgorithmException;
  * email:963181974@qq.com
  */
 
-public class MD5Util {
+public class MD5Utils {
     public static String getEncryption(String originString){
         String result = "";
         if (originString != null) {

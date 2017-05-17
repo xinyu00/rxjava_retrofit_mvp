@@ -74,7 +74,7 @@ public class NetWorkUtils {
     }
 
     public static void getIPAddress(final AddressIp addressIp) {
-        Api.getDefault(HostType.TYPE1,Constant.TAOBAOURL)
+        Api.getDefault(HostType.TYPE1, ConstantUtils.TAOBAOURL)
                 .getIp("myip")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -96,11 +96,14 @@ public class NetWorkUtils {
 
                     @Override
                     public void onNext(String s) {
-                        LogUtil.e("NetWorkUtils","------"+s);
+                        LogUtils.e("NetWorkUtils","------"+s);
                         JSONObject jsonObject = JSON.parseObject(s);
-                        JSONObject data = jsonObject.getJSONObject("data");
-                        String ip = data.getString("ip");
-                        addressIp.getIp(ip);
+                        int code = jsonObject.getInteger("code");
+                        if (code == 0){
+                            JSONObject data = jsonObject.getJSONObject("data");
+                            String ip = data.getString("ip");
+                            addressIp.getIp(ip);
+                        }
                     }
                 });
     }

@@ -8,7 +8,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.squareup.leakcanary.LeakCanary;
 import com.xy.mvp.BuildConfig;
-import com.xy.mvp.utils.LogUtil;
+import com.xy.mvp.utils.FileUtils;
 
 import java.io.File;
 
@@ -35,14 +35,11 @@ public class AndroidApplication extends Application {
      * 初始化运行环境
      */
     private void initEnv() {
-        //设置Log在debug模式开启
-        LogUtil.logInit(BuildConfig.DEBUG);
-        //初始化Fresco
-        // 高级初始化：
+        Fresco.initialize(this);
         Fresco.initialize(this, ImagePipelineConfig.newBuilder(this)
                 .setMainDiskCacheConfig(
                         DiskCacheConfig.newBuilder(this)
-                                .setBaseDirectoryPath(new File("SD卡路径")) // 注意Android运行时权限。
+                                .setBaseDirectoryPath(new File(FileUtils.getAppFile()+"image")) // 注意Android运行时权限。
                                 .build()
                 )
                 .build()

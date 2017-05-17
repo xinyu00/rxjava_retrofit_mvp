@@ -5,7 +5,9 @@ import android.app.Activity;
 import com.xy.mvp.base.BaseActivity;
 import com.xy.mvp.dagger.PerActivity;
 import com.xy.mvp.presenter.BaseActivityPresenter;
+import com.xy.mvp.presenter.user.LoginUIPresenter;
 import com.xy.mvp.presenter.user.RegisterUIPresenter;
+import com.xy.mvp.ui.user.LoginUI;
 import com.xy.mvp.ui.user.RegisterUI;
 
 import dagger.Module;
@@ -27,6 +29,11 @@ public class ActivityModule {
     @Provides @PerActivity
     Activity activity() {
         return this.activity;
+    }
+
+    @Provides @PerActivity
+    LoginUIPresenter provideLoginPresenter() {
+        return new LoginUIPresenter((LoginUI) activity());
     }
 
     @Provides @PerActivity

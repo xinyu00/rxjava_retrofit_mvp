@@ -1,13 +1,20 @@
 package com.xy.mvp.base;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.LinearLayout;
 
 import com.xy.mvp.dagger.component.DaggerActivityComponent;
 import com.xy.mvp.dagger.module.ActivityModule;
 import com.xy.mvp.presenter.BaseActivityPresenter;
-import com.xy.mvp.utils.LogUtil;
+import com.xy.mvp.utils.AppCompatUtils;
+import com.xy.mvp.utils.LogUtils;
 import com.xy.mvp.utils.ToastUtils;
 
 import javax.inject.Inject;
@@ -30,6 +37,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     private boolean onStartFlag;
     //Log标识
     private final String TAG = "MPermissions";
+    //Activity布局
+    private LinearLayout ll_content;
+    //沉浸式标题头
+    public View top;
     @Inject
     protected BaseActivityPresenter baseActivityPresenter;
 
@@ -42,12 +53,9 @@ public abstract class BaseActivity extends AppCompatActivity {
                 .activityModule(getActivityModule())
                 .build()
                 .inject(this);
-
-        //初始化Activity默认布局
-        baseActivityPresenter.setContentView();
+        setContentView();
         //Activity管理
         AppManager.getAppManager().addActivity(this);
-
         //初始化布局
         initView();
     }
@@ -69,12 +77,78 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /**
+     * 设置沉浸式头布局
+     */
+    public View setImmersion() {
+        top = new View(this);
+        // 判断SDK的Api是否大于19
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            //设置沉浸式标题栏
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+            LinearLayout.LayoutParams topparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, AppCompatUtils.dp2px(25, this));
+            top.setLayoutParams(topparams);
+            top.setBackgroundColor(0x21baf5);
+
+        }
+        return top;
+    }
+
+
+    /**
+     * 沉浸式时，设置标题栏布局是否隐藏
+     *
+     * @param choose 0:隐藏标题栏 1:移出标题栏
+     */
+    public void setTopShow(int choose) {
+        if (top == null) {
+            return;
+        }
+        switch (choose) {
+            case 0:
+                top.setVisibility(View.GONE);
+                break;
+            case 1:
+                ll_content.removeView(top);
+                break;
+            default:
+                top.setVisibility(View.VISIBLE);
+                break;
+        }
+    }
+
+    /**
+     * 初始化布局
+     */
+    public void setContentView() {
+        ll_content = new LinearLayout(this);
+        //设置当前Activity布局填充满屏幕
+        ll_content.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        ll_content.setOrientation(LinearLayout.VERTICAL);   //竖直布局
+        setContentView(ll_content);     //Activity填充布局
+    }
+
+    /**
+     * 设置ll_content的子布局
+     */
+    public void setSonView() {
+        ll_content.addView(setImmersion());
+        //获取子类布局
+        ViewGroup content = (ViewGroup) LayoutInflater.from(this).inflate(getLayoutId(), null);
+        content.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        //添加主体布局
+        ll_content.addView(content);
+    }
+
+
+    /**
      * 获取权限成功
      *
      * @param requestCode 获取权限成功后返回的code值
      */
     public void permissionSuccess(int requestCode) {
-        LogUtil.e(TAG, "获取权限成功=" + requestCode);
+        LogUtils.e(TAG, "获取权限成功=" + requestCode);
     }
 
     /**
@@ -83,7 +157,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @param requestCode 获取权限失败后返回的code值
      */
     public void permissionFail(int requestCode) {
-        LogUtil.e(TAG, "获取权限失败=" + requestCode);
+        LogUtils.e(TAG, "获取权限失败=" + requestCode);
     }
 
     /**
@@ -100,13 +174,20 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onResume();
         if (onStartFlag) {
             //设置沉浸式标题栏
-            baseActivityPresenter.setSonView();
+            setSonView();
             //初始化ButterKnife注解框架
             unbinder = ButterKnife.bind(this);
             //初始化数据
             initData();
             onStartFlag = false;
         }
+    }
+
+    /**
+     * 设置top颜色
+     */
+    public void setTopColor(int color){
+        top.setBackgroundResource(color);
     }
 
     /**

@@ -5,6 +5,7 @@ import android.app.Activity;
 import com.xy.mvp.base.BaseActivity;
 import com.xy.mvp.dagger.PerActivity;
 import com.xy.mvp.dagger.module.ActivityModule;
+import com.xy.mvp.ui.user.LoginUI;
 import com.xy.mvp.ui.user.RegisterUI;
 
 import dagger.Component;
@@ -19,5 +20,6 @@ import dagger.Component;
 public interface ActivityComponent {
     Activity activity();
     void inject(RegisterUI activity);
+    void inject(LoginUI activity);
     void inject(BaseActivity activity);
 }

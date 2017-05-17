@@ -103,7 +103,7 @@ public class PowerUtils {
      * @param requestCode
      */
     public void permissionSuccess(int requestCode) {
-        LogUtil.e(TAG, "获取权限成功=" + requestCode);
+        LogUtils.e(TAG, "获取权限成功=" + requestCode);
     }
 
 
@@ -113,7 +113,7 @@ public class PowerUtils {
      * @param requestCode
      */
     public void permissionFail(int requestCode) {
-        LogUtil.e(TAG, "获取权限失败=" + requestCode);
+        LogUtils.e(TAG, "获取权限失败=" + requestCode);
     }
 
     /**

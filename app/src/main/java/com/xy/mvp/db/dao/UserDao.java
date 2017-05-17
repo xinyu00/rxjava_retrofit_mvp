@@ -1,18 +1,18 @@
 package com.xy.mvp.db.dao;
 
 
-import com.xy.mvp.bean.User;
+import com.xy.mvp.entity.UserEntity;
 
 public interface UserDao {
 	
-	void addUser(User user);		// 添加User
+	void addUser(UserEntity user);		// 添加User
 	
-	User getUser(int userId);		// 根据userId查询User
+	UserEntity getUser(int userId);		// 根据userId查询User
 	
-	void update(User user);			// 更新User
+	void update(UserEntity user);			// 更新User
 	
-	void delete(User user);			// 删除User
+	void delete(UserEntity user);			// 删除User
 	
-	User findUser(String userName);	// 根据用户名查询User
+	UserEntity findUser(String userName);	// 根据用户名查询User
 
 }
