@@ -1,12 +1,15 @@
 package com.xy.mvp.base;
 
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
@@ -80,21 +83,18 @@ public abstract class BaseActivity extends AppCompatActivity {
      * 设置沉浸式头布局
      */
     public View setImmersion() {
-        top = new View(this);
         // 判断SDK的Api是否大于19
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            top = new View(this);
             //设置沉浸式标题栏
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-
             LinearLayout.LayoutParams topparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, AppCompatUtils.dp2px(25, this));
             top.setLayoutParams(topparams);
             top.setBackgroundColor(0x21baf5);
-
         }
         return top;
     }
-
 
     /**
      * 沉浸式时，设置标题栏布局是否隐藏
@@ -102,19 +102,23 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @param choose 0:隐藏标题栏 1:移出标题栏
      */
     public void setTopShow(int choose) {
-        if (top == null) {
-            return;
-        }
-        switch (choose) {
-            case 0:
-                top.setVisibility(View.GONE);
-                break;
-            case 1:
-                ll_content.removeView(top);
-                break;
-            default:
-                top.setVisibility(View.VISIBLE);
-                break;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            switch (choose) {
+                case 0:
+                    top.setVisibility(View.GONE);
+                    break;
+                case 1:
+                    top.setVisibility(View.VISIBLE);
+                    break;
+            }
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar !=null){
+                actionBar.hide();
+            }
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(Color.TRANSPARENT);
         }
     }
 
@@ -122,25 +126,32 @@ public abstract class BaseActivity extends AppCompatActivity {
      * 初始化布局
      */
     public void setContentView() {
-        ll_content = new LinearLayout(this);
-        //设置当前Activity布局填充满屏幕
-        ll_content.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-        ll_content.setOrientation(LinearLayout.VERTICAL);   //竖直布局
-        setContentView(ll_content);     //Activity填充布局
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            ll_content = new LinearLayout(this);
+            //设置当前Activity布局填充满屏幕
+            ll_content.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+            ll_content.setOrientation(LinearLayout.VERTICAL);   //竖直布局
+            setContentView(ll_content);     //Activity填充布局
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setContentView(getLayoutId());
+        } else {
+            setContentView(getLayoutId());
+        }
     }
 
     /**
      * 设置ll_content的子布局
      */
     public void setSonView() {
-        ll_content.addView(setImmersion());
-        //获取子类布局
-        ViewGroup content = (ViewGroup) LayoutInflater.from(this).inflate(getLayoutId(), null);
-        content.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        //添加主体布局
-        ll_content.addView(content);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            ll_content.addView(setImmersion());
+            //获取子类布局
+            ViewGroup content = (ViewGroup) LayoutInflater.from(this).inflate(getLayoutId(), null);
+            content.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            //添加主体布局
+            ll_content.addView(content);
+        }
     }
-
 
     /**
      * 获取权限成功
@@ -186,8 +197,14 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * 设置top颜色
      */
-    public void setTopColor(int color){
-        top.setBackgroundResource(color);
+    public void setTopColor(int color) {
+        if (top !=null){
+            top.setBackgroundResource(color);
+        }else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                getWindow().setStatusBarColor(color);
+            }
+        }
     }
 
     /**

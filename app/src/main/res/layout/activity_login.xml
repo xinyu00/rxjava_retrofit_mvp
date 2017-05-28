@@ -39,7 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/login_et"
         android:layout_margin="@dimen/big_margin"
-        android:background="@drawable/shape_blue_button"
+        android:background="@drawable/blue_sure_button"
         android:onClick="login"
         style="@style/ButtonStyle"
         android:text="@string/login"

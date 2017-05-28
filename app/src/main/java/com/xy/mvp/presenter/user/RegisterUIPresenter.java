@@ -12,6 +12,9 @@ import com.xy.mvp.utils.ConstantUtils;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -22,20 +25,23 @@ import io.reactivex.schedulers.Schedulers;
  * email:963181974@qq.com
  */
 @PerActivity
-public class RegisterUIPresenter  {
+public class RegisterUIPresenter {
     private ApiService api;
     private RegisterUI activity;
+    private List<Subscription> subscriptions;
+
     @Inject
     public RegisterUIPresenter(RegisterUI activity) {
         this.activity = activity;
         api = Api.getDefault(HostType.TYPE1, ConstantUtils.BASEURL);
+        subscriptions = new ArrayList<>();
     }
 
     /**
      * 用户注册
      */
-    public void register(final String phone,final String password) {
-        api.register(phone, password,0, 0)
+    public void register(final String phone, final String password) {
+        api.register(phone, password, 0, 0)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<String>() {
@@ -52,17 +58,24 @@ public class RegisterUIPresenter  {
                     @Override
                     public void onSubscribe(Subscription s) {
                         s.request(Long.MAX_VALUE);
+                        subscriptions.add(s);
                     }
 
                     @Override
                     public void onNext(String s) {
-                        ResponseInfo info = JSON.parseObject(s,ResponseInfo.class);
-                        if ("0".equals(info.code)){
+                        ResponseInfo info = JSON.parseObject(s, ResponseInfo.class);
+                        if ("0".equals(info.code)) {
                             activity.success(info.msg);
-                        }else {
+                        } else {
                             activity.failed(info.msg);
                         }
                     }
                 });
+    }
+
+    public void clearNet() {
+        for (Subscription s : subscriptions) {
+            s.cancel();
+        }
     }
 }

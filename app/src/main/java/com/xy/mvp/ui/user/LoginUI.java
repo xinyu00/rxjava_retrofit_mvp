@@ -33,7 +33,6 @@ public class LoginUI extends BaseActivity {
     public void initData() {
         dialog = new ProgressDialog(this);
         initInject();
-        setTopColor(R.color.colorAccent);
     }
 
     //按钮点击
@@ -48,7 +47,6 @@ public class LoginUI extends BaseActivity {
             Toast.makeText(LoginUI.this, "用户名或密码不能为空", Toast.LENGTH_SHORT).show();
         }
     }
-
     private void initInject() {
         DaggerActivityComponent.builder()
                 .activityModule(getActivityModule())
@@ -72,16 +70,16 @@ public class LoginUI extends BaseActivity {
 
     @Override
     public void initView() {
-
+        setTopShow(0);
     }
 
     @Override
     public int getLayoutId() {
         return R.layout.activity_login;
     }
-
-    @Override
-    public void onBackPressed() {
-        secondClickFinish();
-    }
+//
+//    @Override
+//    public void onBackPressed() {
+//        secondClickFinish();
+//    }
 }

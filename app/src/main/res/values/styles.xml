@@ -1,8 +1,8 @@
 <resources>
     <!--App样式-->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/button</item>
-        <item name="colorPrimaryDark">@color/button</item>
+        <item name="colorPrimary">@color/button_pro</item>
+        <item name="colorPrimaryDark">@color/button_pro</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:screenOrientation">portrait</item>
     </style>
@@ -20,7 +20,6 @@
     </style>
 
     <style name="ButtonStyle">
-        <item name="android:stateListAnimator">@null</item>
         <item name="android:gravity">center</item>
     </style>
 

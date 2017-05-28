@@ -152,7 +152,8 @@
     <color name="gainsboro">#dcdcdc</color><!--淡灰色 -->
 
     <color name="background">#ededf3</color><!--背景颜色 -->
-    <color name="button">#21baf5</color><!--天际蓝色 -->
+    <color name="button_pro">#21baf5</color><!--天际蓝色 -->
+    <color name="button_nor">#10b0e0</color><!--天际蓝色 -->
     <color name="line">#f6f4f6</color><!--灰线 -->
     <color name="hint">#cfcecf</color><!--提示 -->
 

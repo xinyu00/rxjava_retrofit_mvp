@@ -9,4 +9,8 @@
 .idea/
 gradlew
 gradlew.bat
+*/build
+*/.externalNativeBuild
+
+
 
