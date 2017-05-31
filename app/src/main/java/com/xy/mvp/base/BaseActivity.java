@@ -1,6 +1,5 @@
 package com.xy.mvp.base;
 
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -43,7 +42,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     //Activity布局
     private LinearLayout ll_content;
     //沉浸式标题头
-    public View top;
+    private View top;
+    //窗体
+    private Window window;
+
     @Inject
     protected BaseActivityPresenter baseActivityPresenter;
 
@@ -56,11 +58,23 @@ public abstract class BaseActivity extends AppCompatActivity {
                 .activityModule(getActivityModule())
                 .build()
                 .inject(this);
+        //设置适配布局
         setContentView();
+        //隐藏ActionBar
+        setActionBar();
+        //隐藏状态栏
+        setTopShow(false);
         //Activity管理
         AppManager.getAppManager().addActivity(this);
         //初始化布局
         initView();
+    }
+
+    private void setActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
     }
 
     /**
@@ -82,7 +96,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * 设置沉浸式头布局
      */
-    public View setImmersion() {
+    protected View setImmersion() {
         // 判断SDK的Api是否大于19
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             top = new View(this);
@@ -99,33 +113,28 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * 沉浸式时，设置标题栏布局是否隐藏
      *
-     * @param choose 0:隐藏标题栏 1:移出标题栏
+     * @param flag false:隐藏标题栏 true:移出标题栏
      */
-    public void setTopShow(int choose) {
+    protected void setTopShow(boolean flag) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            switch (choose) {
-                case 0:
-                    top.setVisibility(View.GONE);
-                    break;
-                case 1:
-                    top.setVisibility(View.VISIBLE);
-                    break;
+            if (flag) {
+                top.setVisibility(View.VISIBLE);
+            } else {
+                top.setVisibility(View.GONE);
             }
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            ActionBar actionBar = getSupportActionBar();
-            if (actionBar !=null){
-                actionBar.hide();
+            if (flag) {
+                window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            } else {
+                window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             }
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.setStatusBarColor(Color.TRANSPARENT);
         }
     }
 
     /**
      * 初始化布局
      */
-    public void setContentView() {
+    protected void setContentView() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             ll_content = new LinearLayout(this);
             //设置当前Activity布局填充满屏幕
@@ -137,12 +146,13 @@ public abstract class BaseActivity extends AppCompatActivity {
         } else {
             setContentView(getLayoutId());
         }
+        window = getWindow();
     }
 
     /**
      * 设置ll_content的子布局
      */
-    public void setSonView() {
+    protected void setSonView() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             ll_content.addView(setImmersion());
             //获取子类布局
@@ -197,12 +207,13 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * 设置top颜色
      */
-    public void setTopColor(int color) {
-        if (top !=null){
+    protected void setTopColor(int color) {
+        setTopShow(true);
+        if (top != null) {
             top.setBackgroundResource(color);
-        }else {
+        } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                getWindow().setStatusBarColor(color);
+                window.setStatusBarColor(color);
             }
         }
     }
@@ -235,7 +246,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * 设置当前Activity二次点击退出整个APP
      */
-    public void secondClickFinish() {
+    protected void secondClickFinish() {
         if (System.currentTimeMillis() - currentBackPressedTime > BACK_PRESSED_INTERVAL) {
             currentBackPressedTime = System.currentTimeMillis();
             ToastUtils.showShort("再按一次返回键退出程序");

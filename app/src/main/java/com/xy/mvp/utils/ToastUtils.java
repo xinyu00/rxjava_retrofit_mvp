@@ -13,6 +13,7 @@ import static com.xy.mvp.BuildConfig.DEBUG;
 public class ToastUtils {
     //Toast弹出标识
     private static boolean isShow = true;
+    private static Toast toast;
 
     private ToastUtils() {
         throw new UnsupportedOperationException("toastutils cannot be new");
@@ -34,8 +35,17 @@ public class ToastUtils {
      * 短时间显示Toast
      */
     public static void showShort(CharSequence message) {
-        if (getIsShow())
-            Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+        if (getIsShow()){
+            cancel();
+            toast = Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
+
+    public static void cancel(){
+        if (toast !=null){
+            toast.cancel();
+        }
     }
 
 
@@ -43,45 +53,64 @@ public class ToastUtils {
      * 短时间显示Toast
      */
     public static void showShort(int message) {
-        if (getIsShow())
-            Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+        if (getIsShow()){
+            cancel();
+            toast = Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 
     /**
      * 长时间显示Toast
      */
     public static void showLong(CharSequence message) {
-        if (getIsShow())
-            Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+        if (getIsShow()){
+            cancel();
+            toast = Toast.makeText(getActivity(), message, Toast.LENGTH_LONG);
+            toast.show();
+        }
     }
 
     /**
      * 长时间显示Toast
      */
     public static void showLong(int message) {
-        if (getIsShow())
-            Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+        if (getIsShow()){
+            cancel();
+            toast = Toast.makeText(getActivity(), message, Toast.LENGTH_LONG);
+            toast.show();
+        }
     }
 
     /**
      * 自定义显示Toast时间
      */
     public static void show(CharSequence message, int duration) {
-        if (getIsShow())
-            Toast.makeText(getActivity(), message, duration).show();
+        if (getIsShow()){
+            cancel();
+            toast = Toast.makeText(getActivity(), message, duration);
+            toast.show();
+        }
     }
 
     /**
      * 自定义显示Toast时间
      */
     public static void show(int message, int duration) {
-        if (getIsShow())
-            Toast.makeText(getActivity(), message, duration).show();
+        if (getIsShow()) {
+            cancel();
+            toast = Toast.makeText(getActivity(), message, duration);
+            toast.show();
+        }
     }
 
+    /**
+     * 错误提示 （可用于debug模式下网络请求错误提示，replease模式下自动关闭）
+     */
     public static void errorShow(CharSequence message) {
-        if (DEBUG)
+        if (DEBUG){
             showShort(message);
+        }
     }
 
     /**
@@ -89,7 +118,8 @@ public class ToastUtils {
      */
     public static void centerShow(CharSequence message) {
         if (getIsShow()) {
-            Toast toast = Toast.makeText(getActivity(), message, Toast.LENGTH_LONG);
+            cancel();
+            toast = Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
         }

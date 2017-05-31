@@ -4,12 +4,12 @@ import android.app.ProgressDialog;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.xy.mvp.R;
 import com.xy.mvp.base.BaseActivity;
 import com.xy.mvp.dagger.component.DaggerActivityComponent;
 import com.xy.mvp.presenter.user.LoginUIPresenter;
+import com.xy.mvp.utils.ToastUtils;
 
 import javax.inject.Inject;
 
@@ -34,9 +34,10 @@ public class LoginUI extends BaseActivity {
         dialog = new ProgressDialog(this);
         initInject();
     }
-
+    int i = 0;
     //按钮点击
     public void login(View view) {
+        ToastUtils.errorShow("吐司"+(++i));
         String username = mUsername.getText().toString();
         String password = mPassword.getText().toString();
         boolean checkUserInfo = checkUserInfo(username, password);
@@ -44,7 +45,7 @@ public class LoginUI extends BaseActivity {
             dialog.show();
             presenter.login(username, password);
         } else {
-            Toast.makeText(LoginUI.this, "用户名或密码不能为空", Toast.LENGTH_SHORT).show();
+            ToastUtils.showShort("用户名或密码不能为空"+(++i));
         }
     }
     private void initInject() {
@@ -60,17 +61,17 @@ public class LoginUI extends BaseActivity {
 
     public void success() {
         dialog.dismiss();
-        Toast.makeText(LoginUI.this, "欢迎回来：" + mUsername.getText().toString(), Toast.LENGTH_SHORT).show();
+        ToastUtils.showShort("欢迎回来：" + mUsername.getText().toString());
     }
 
     public void failed() {
         dialog.dismiss();
-        Toast.makeText(LoginUI.this, "用户名或密码输入有误", Toast.LENGTH_SHORT).show();
+        ToastUtils.showShort("用户名或密码输入有误");
     }
 
     @Override
     public void initView() {
-        setTopShow(0);
+        setTopColor(getResources().getColor(R.color.button_nor));
     }
 
     @Override

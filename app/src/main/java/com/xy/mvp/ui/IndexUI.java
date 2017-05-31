@@ -10,7 +10,7 @@ public class IndexUI extends BaseActivity {
 
     @Override
     public void initView() {
-        setTopColor(R.color.colorAccent);
+        secondClickFinish();
     }
 
     @Override
