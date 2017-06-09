@@ -1,6 +1,7 @@
 package com.xy.mvp.ui.user;
 
 import android.app.ProgressDialog;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -34,10 +35,12 @@ public class LoginUI extends BaseActivity {
         dialog = new ProgressDialog(this);
         initInject();
     }
+
     int i = 0;
+
     //按钮点击
     public void login(View view) {
-        ToastUtils.errorShow("吐司"+(++i));
+        ToastUtils.errorShow(this, "吐司" + (++i));
         String username = mUsername.getText().toString();
         String password = mPassword.getText().toString();
         boolean checkUserInfo = checkUserInfo(username, password);
@@ -45,9 +48,10 @@ public class LoginUI extends BaseActivity {
             dialog.show();
             presenter.login(username, password);
         } else {
-            ToastUtils.showShort("用户名或密码不能为空"+(++i));
+            ToastUtils.showShort(this, "用户名或密码不能为空" + (++i));
         }
     }
+
     private void initInject() {
         DaggerActivityComponent.builder()
                 .activityModule(getActivityModule())
@@ -61,17 +65,17 @@ public class LoginUI extends BaseActivity {
 
     public void success() {
         dialog.dismiss();
-        ToastUtils.showShort("欢迎回来：" + mUsername.getText().toString());
+        ToastUtils.showShort(this, "欢迎回来：" + mUsername.getText().toString());
     }
 
     public void failed() {
         dialog.dismiss();
-        ToastUtils.showShort("用户名或密码输入有误");
+        ToastUtils.showShort(this, "用户名或密码输入有误");
     }
 
     @Override
     public void initView() {
-        setTopColor(getResources().getColor(R.color.button_nor));
+        setTopColor(ContextCompat.getColor(this, R.color.button_nor));
     }
 
     @Override

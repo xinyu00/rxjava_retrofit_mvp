@@ -8,17 +8,16 @@ import android.content.SharedPreferences;
  */
 public class SpUtils {
 	private static SharedPreferences sharedPreferences;
-	private static String config = "pangu";
+	private static String config = "XY";
 
 	/**
 	 * 存储String数据
 	 */
-	public static String putString(Context context, String Key, String Value) {
+	public static boolean putString(Context context, String Key, String Value) {
 		if (sharedPreferences == null) {
 			sharedPreferences = context.getSharedPreferences(config, Context.MODE_PRIVATE);
 		}
-		sharedPreferences.edit().putString(Key, Value).commit();
-		return Key;
+		return sharedPreferences.edit().putString(Key, Value).commit();
 	}
 
 	/**
@@ -32,11 +31,11 @@ public class SpUtils {
 	}
 
 	// 保存boolean值
-	public static void putBoolean(Context context, String key, boolean value) {
+	public static boolean putBoolean(Context context, String key, boolean value) {
 		if (sharedPreferences == null) {
 			sharedPreferences = context.getSharedPreferences(config, Context.MODE_PRIVATE);
 		}
-		sharedPreferences.edit().putBoolean(key, value).commit();
+		return sharedPreferences.edit().putBoolean(key, value).commit();
 	}
 
 	// 取boolean值
@@ -49,11 +48,11 @@ public class SpUtils {
 	}
 
 	// 保存int值
-	public static void putInt(Context context, String key, int value) {
+	public static boolean putInt(Context context, String key, int value) {
 		if (sharedPreferences == null) {
 			sharedPreferences = context.getSharedPreferences(config, Context.MODE_PRIVATE);
 		}
-		sharedPreferences.edit().putInt(key, value).commit();
+		return sharedPreferences.edit().putInt(key, value).commit();
 	}
 
 	// 取int值

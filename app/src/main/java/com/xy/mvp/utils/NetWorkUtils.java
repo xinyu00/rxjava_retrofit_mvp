@@ -28,11 +28,20 @@ public class NetWorkUtils {
      * 检查网络是否可用
      */
     public static boolean isNetConnected(Context context) {
-        boolean i = false;
-        NetworkInfo localNetworkInfo = ((ConnectivityManager) context
-                .getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
-        if ((localNetworkInfo != null) && (localNetworkInfo.isAvailable()))
-            return true;
+        ConnectivityManager connectivity = (ConnectivityManager) context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivity != null) {
+            NetworkInfo info = connectivity.getActiveNetworkInfo();
+            if (info != null && info.isConnected())
+            {
+                // 当前网络是连接的
+                if (info.getState() == NetworkInfo.State.CONNECTED)
+                {
+                    // 当前所连接的网络可用
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -68,55 +77,18 @@ public class NetWorkUtils {
      * 判断网址是否有效
      */
     public static boolean isLinkAvailable(String link) {
-        Pattern pattern = Pattern.compile("^(http://|https://)?((?:[A-Za-z0-9]+-[A-Za-z0-9]+|[A-Za-z0-9]+)\\.)+([A-Za-z]+)[/\\?\\:]?.*$", Pattern.CASE_INSENSITIVE);
+        String regex = "^(http://|https://)?((?:[A-Za-z0-9]+-[A-Za-z0-9]+|[A-Za-z0-9]+)\\.)+([A-Za-z]+)[/\\?\\:]?.*$";
+        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(link);
         return matcher.matches();
     }
 
-    public static void getIPAddress(final AddressIp addressIp) {
-        Api.getDefault(HostType.TYPE1, ConstantUtils.TAOBAOURL)
-                .getIp("myip")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<String>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        ToastUtils.showShort(e.toString());
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-
-                    @Override
-                    public void onSubscribe(Subscription s) {
-                        s.request(Long.MAX_VALUE);
-                    }
-
-                    @Override
-                    public void onNext(String s) {
-                        LogUtils.e("NetWorkUtils","------"+s);
-                        JSONObject jsonObject = JSON.parseObject(s);
-                        int code = jsonObject.getInteger("code");
-                        if (code == 0){
-                            JSONObject data = jsonObject.getJSONObject("data");
-                            String ip = data.getString("ip");
-                            addressIp.getIp(ip);
-                        }
-                    }
-                });
-    }
-
-    public interface AddressIp{
-        void getIp(String ip);
-    }
 
     /**
      * 将得到的int类型的IP转换为String类型
      *
-     * @param ip
-     * @return
+     * @param ip int类型ip地址
+     * @return String类型ip地址
      */
     public static String intIP2StringIP(int ip) {
         return (ip & 0xFF) + "." +

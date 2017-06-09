@@ -97,7 +97,8 @@ public class FileUtils {
             File f = new File(path);
             if (!f.exists()) {
                 // 如果路径不存在,则创建
-                f.mkdirs();
+                boolean flag = f.mkdirs();
+                LogUtils.e(TAG, "createDirectory中mkdirs方法执行:" + flag);
             }
         } catch (Exception e) {
             LogUtils.e(TAG, "创建目录错误.path=" + path + "\n" + e.toString());
@@ -122,9 +123,11 @@ public class FileUtils {
             }
             // 如果路径不存在,则创建
             if (!f.getParentFile().exists()) {
-                f.getParentFile().mkdirs();
+                boolean flag = f.getParentFile().mkdirs();
+                LogUtils.e(TAG, "createFile中mkdirs方法执行:" + flag);
             }
-            f.createNewFile();
+            boolean flag = f.createNewFile();
+            LogUtils.e(TAG, "createFile中createNewFile方法执行:" + flag);
         } catch (Exception e) {
             LogUtils.e(TAG, "创建文件错误.path=" + path + "\n" + e.toString());
             e.printStackTrace();
@@ -137,7 +140,7 @@ public class FileUtils {
      * @param path    文件路径
      * @param content 文件内容
      */
-    public static void saveFile(String path, String content){
+    public static void saveFile(String path, String content) {
         saveFile(path, content, DEFAULT_ENCODE);
     }
 
@@ -148,7 +151,7 @@ public class FileUtils {
      * @param content  文件内容
      * @param encoding 编码(UTF-8/gb2312/...)
      */
-    public static void saveFile(String path, String content, String encoding){
+    public static void saveFile(String path, String content, String encoding) {
         FileOutputStream fileOutputStream = null;
         BufferedOutputStream bw = null;
         try {
@@ -158,7 +161,8 @@ public class FileUtils {
             encoding = (TextUtils.isEmpty(encoding)) ? DEFAULT_ENCODE : encoding;
             // 如果路径不存在,则创建
             if (!f.getParentFile().exists()) {
-                f.getParentFile().mkdirs();
+                boolean flag = f.getParentFile().mkdirs();
+                LogUtils.e(TAG, "mkdirs方法执行" + flag);
             }
             // 开始保存文件
             fileOutputStream = new FileOutputStream(path);

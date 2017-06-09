@@ -18,17 +18,19 @@ import java.io.File;
  */
 
 public class AndroidApplication extends Application {
-    private static Context content;
-
+    private static Context context;
     @Override
     public void onCreate() {
         super.onCreate();
-        this.content = getApplicationContext();
+        setContext(this);
         initEnv();
     }
+    public static Context getAppContext() {
+        return context;
+    }
 
-    public static Context getInstance() {
-        return content;
+    public void setContext(Context context) {
+        this.context = context.getApplicationContext();
     }
 
     /**

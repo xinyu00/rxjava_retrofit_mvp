@@ -1,6 +1,7 @@
 package com.xy.mvp.base;
 
 import android.app.Activity;
+import android.content.Context;
 
 import java.util.Stack;
 
@@ -11,15 +12,12 @@ import java.util.Stack;
  */
 
 public class AppManager {
-    private static Stack<Activity> activityStack;
-    private volatile static AppManager instance;
-
+    private Stack<Activity> activityStack;
+    private static AppManager instance;
     private AppManager() {
     }
-
     /**
      * 单一实例化当前对象
-     *
      */
     public static AppManager getAppManager() {
         if (instance == null) {
@@ -116,6 +114,8 @@ public class AppManager {
             System.exit(0);
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            instance = null;
         }
     }
 }

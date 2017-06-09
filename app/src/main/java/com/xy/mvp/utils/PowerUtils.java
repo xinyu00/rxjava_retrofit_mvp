@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * anthor:Created by tianchen on 2017/5/14.
  * email:963181974@qq.com
- * Android6.0 动态权限处理类
+ * Android6.0 动态权限处理类(已废弃)
  */
 
 public class PowerUtils {
@@ -38,15 +38,12 @@ public class PowerUtils {
             }
         }
         return power;
-
     }
-
 
     /**
      * 检测所有的权限是否都已授权
-     *
-     * @param permissions
-     * @return
+     * @param permissions 权限列表
+     * @return 是否全部授权 true 已授权 false 未授权
      */
     private boolean checkPermissions(Context context, String[] permissions) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
@@ -64,9 +61,8 @@ public class PowerUtils {
 
     /**
      * 获取权限集中需要申请权限的列表
-     *
-     * @param permissions
-     * @return
+     * @param permissions 权限列表
+     * @return  返回未获取到权限的列表集合
      */
     private List<String> getDeniedPermissions(Activity context, String[] permissions) {
         List<String> needRequestPermissionList = new ArrayList<>();
@@ -100,7 +96,7 @@ public class PowerUtils {
     /**
      * 获取权限成功
      *
-     * @param requestCode
+     * @param requestCode 请求码
      */
     public void permissionSuccess(int requestCode) {
         LogUtils.e(TAG, "获取权限成功=" + requestCode);
@@ -110,7 +106,7 @@ public class PowerUtils {
     /**
      * 权限获取失败
      *
-     * @param requestCode
+     * @param requestCode 请求码
      */
     public void permissionFail(int requestCode) {
         LogUtils.e(TAG, "获取权限失败=" + requestCode);

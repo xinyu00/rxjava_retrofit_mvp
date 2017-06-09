@@ -53,7 +53,7 @@ public class RegisterUI extends BaseActivity{
 
     public void success(String msg) {
         dialog.dismiss();
-        ToastUtils.showShort("尊敬的"+et_phone.getText().toString() + "用户,"+msg);
+        ToastUtils.showShort(this,"尊敬的"+et_phone.getText().toString() + "用户,"+msg);
     }
 
     private boolean checkUserInfo(String username, String password) {
@@ -62,7 +62,7 @@ public class RegisterUI extends BaseActivity{
 
     public void failed(String msg) {
         dialog.dismiss();
-        ToastUtils.errorShow(msg);
+        ToastUtils.errorShow(this,msg);
     }
 
     @OnClick(R.id.bt_register)
@@ -74,7 +74,7 @@ public class RegisterUI extends BaseActivity{
             dialog.show();
             presenter.register(et_phone.getText().toString(),et_password.getText().toString());
         } else {
-            ToastUtils.showShort("手机号或密码不能为空");
+            ToastUtils.showShort(this,"手机号或密码不能为空");
         }
 
     }

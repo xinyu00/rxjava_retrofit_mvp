@@ -249,7 +249,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void secondClickFinish() {
         if (System.currentTimeMillis() - currentBackPressedTime > BACK_PRESSED_INTERVAL) {
             currentBackPressedTime = System.currentTimeMillis();
-            ToastUtils.showShort("再按一次返回键退出程序");
+            ToastUtils.showShort(this,"再按一次返回键退出程序");
         } else {
             // 退出
             ToastUtils.setIsShow(false);

@@ -1,10 +1,10 @@
 package com.xy.mvp.utils;
 
 
-import android.app.Activity;
+import android.content.Context;
 import android.view.Gravity;
 import android.widget.Toast;
-import com.xy.mvp.base.AppManager;
+
 import static com.xy.mvp.BuildConfig.DEBUG;
 
 /**
@@ -27,79 +27,76 @@ public class ToastUtils {
         isShow = flag;
     }
 
-    private static Activity getActivity() {
-        return AppManager.getAppManager().currentActivity();
-    }
-
     /**
      * 短时间显示Toast
      */
-    public static void showShort(CharSequence message) {
-        if (getIsShow()){
-            cancel();
-            toast = Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT);
-            toast.show();
-        }
-    }
-
-    public static void cancel(){
-        if (toast !=null){
-            toast.cancel();
-        }
-    }
-
-
-    /**
-     * 短时间显示Toast
-     */
-    public static void showShort(int message) {
-        if (getIsShow()){
-            cancel();
-            toast = Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT);
-            toast.show();
-        }
-    }
-
-    /**
-     * 长时间显示Toast
-     */
-    public static void showLong(CharSequence message) {
-        if (getIsShow()){
-            cancel();
-            toast = Toast.makeText(getActivity(), message, Toast.LENGTH_LONG);
-            toast.show();
-        }
-    }
-
-    /**
-     * 长时间显示Toast
-     */
-    public static void showLong(int message) {
-        if (getIsShow()){
-            cancel();
-            toast = Toast.makeText(getActivity(), message, Toast.LENGTH_LONG);
-            toast.show();
-        }
-    }
-
-    /**
-     * 自定义显示Toast时间
-     */
-    public static void show(CharSequence message, int duration) {
-        if (getIsShow()){
-            cancel();
-            toast = Toast.makeText(getActivity(), message, duration);
-            toast.show();
-        }
-    }
-
-    /**
-     * 自定义显示Toast时间
-     */
-    public static void show(int message, int duration) {
+    public static void showShort(Context context, CharSequence message) {
         if (getIsShow()) {
             cancel();
-            toast = Toast.makeText(getActivity(), message, duration);
+            toast = Toast.makeText(context.getApplicationContext(), message, Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
+
+    private static void cancel() {
+        if (toast != null) {
+            toast.cancel();
+            toast = null;
+        }
+    }
+
+
+    /**
+     * 短时间显示Toast
+     */
+    public static void showShort(Context context, int message) {
+        if (getIsShow()) {
+            cancel();
+            toast = Toast.makeText(context.getApplicationContext(), message, Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
+
+    /**
+     * 长时间显示Toast
+     */
+    public static void showLong(Context context, CharSequence message) {
+        if (getIsShow()) {
+            cancel();
+            toast = Toast.makeText(context.getApplicationContext(), message, Toast.LENGTH_LONG);
+            toast.show();
+        }
+    }
+
+    /**
+     * 长时间显示Toast
+     */
+    public static void showLong(Context context, int message) {
+        if (getIsShow()) {
+            cancel();
+            toast = Toast.makeText(context.getApplicationContext(), message, Toast.LENGTH_LONG);
+            toast.show();
+        }
+    }
+
+    /**
+     * 自定义显示Toast时间
+     */
+    public static void show(Context context, CharSequence message, int duration) {
+        if (getIsShow()) {
+            cancel();
+            toast = Toast.makeText(context.getApplicationContext(), message, duration);
+            toast.show();
+        }
+    }
+
+    /**
+     * 自定义显示Toast时间
+     */
+    public static void show(Context context, int message, int duration) {
+        if (getIsShow()) {
+            cancel();
+            toast = Toast.makeText(context.getApplicationContext(), message, duration);
             toast.show();
         }
     }
@@ -107,22 +104,21 @@ public class ToastUtils {
     /**
      * 错误提示 （可用于debug模式下网络请求错误提示，replease模式下自动关闭）
      */
-    public static void errorShow(CharSequence message) {
-        if (DEBUG){
-            showShort(message);
+    public static void errorShow(Context context, CharSequence message) {
+        if (DEBUG) {
+            showShort(context.getApplicationContext(), message);
         }
     }
 
     /**
      * 自定义显示位置 居中
      */
-    public static void centerShow(CharSequence message) {
+    public static void centerShow(Context context, CharSequence message) {
         if (getIsShow()) {
             cancel();
-            toast = Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT);
+            toast = Toast.makeText(context.getApplicationContext(), message, Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
         }
     }
-
 }

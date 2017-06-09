@@ -14,7 +14,7 @@ import retrofit2.http.Query;
 
 public interface ApiService {
     @GET(ConstantUtils.USER)
-    public Flowable<String> rxlogin(
+    Flowable<String> rxlogin(
             @Header("Cache-Control") String cacheControl,
             @Query("username")
                     String username,
@@ -24,7 +24,7 @@ public interface ApiService {
                     int type);
 
     @GET(ConstantUtils.USER)
-    public Flowable<String> register(
+    Flowable<String> register(
             @Query("phone")
                     String phone,
             @Query("password")
@@ -35,7 +35,7 @@ public interface ApiService {
                     int type);
 
     @GET(ConstantUtils.TAOBAOURL)
-    public Flowable<String> getIp(
+    Flowable<String> getIp(
             @Query("ip")
                     String ip);
 

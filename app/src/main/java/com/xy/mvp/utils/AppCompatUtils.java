@@ -11,7 +11,6 @@ import android.content.Context;
 public class AppCompatUtils {
     /**
      * dp转换px
-     *
      * @param dp    dp值
      * @param context   上下文
      * @return  转换后的px值
