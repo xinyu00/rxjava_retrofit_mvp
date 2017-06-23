@@ -17,26 +17,30 @@ import java.io.IOException;
 public class FileUtils {
     private static String TAG = "FileUtils";
     private static String DEFAULT_ENCODE = "UTF-8";
+    private static String appPath = "/xyapp/";
 
     /**
      * 获取App文件目录
      */
     public static String getAppFilePath() {
-        return getInnerSDCardPath() + "/xyapp/";
+        return getInnerSDCardPath() + appPath;
     }
 
     /**
      * 获取App文件目录
      */
     public static File getAppFile() {
-        return new File(getInnerSDCardPath() + "/xyapp/");
+        return new File(getInnerSDCardPath() + appPath);
     }
 
     /**
      * 创建App文件目录
      */
     public static void createAppFile() {
-        createDirectory(getInnerSDCardPath() + "/xyapp/");
+        String path = getInnerSDCardPath();
+        createDirectory(path + appPath);
+        createDirectory(path + appPath + "log/");
+        createDirectory(path + appPath + "image/");
     }
 
     /**
@@ -51,7 +55,7 @@ public class FileUtils {
     /**
      * 获取内置SD卡路径
      */
-    public static String getInnerSDCardPath() {
+    private static String getInnerSDCardPath() {
         if (getSDcardIsExist()) {
             return Environment.getExternalStorageDirectory().getPath();
         } else {

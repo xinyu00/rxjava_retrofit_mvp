@@ -38,6 +38,9 @@ public class ToastUtils {
         }
     }
 
+    /**
+     * 弹出提示框
+     */
     private static void cancel() {
         if (toast != null) {
             toast.cancel();

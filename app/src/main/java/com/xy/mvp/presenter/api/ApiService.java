@@ -1,6 +1,6 @@
 package com.xy.mvp.presenter.api;
 
-import com.xy.mvp.utils.ConstantUtils;
+import com.xy.mvp.utils.UrlUtils;
 
 import io.reactivex.Flowable;
 import retrofit2.http.GET;
@@ -13,7 +13,7 @@ import retrofit2.http.Query;
  */
 
 public interface ApiService {
-    @GET(ConstantUtils.USER)
+    @GET(UrlUtils.USER)
     Flowable<String> rxlogin(
             @Header("Cache-Control") String cacheControl,
             @Query("username")
@@ -23,7 +23,7 @@ public interface ApiService {
             @Query("type")
                     int type);
 
-    @GET(ConstantUtils.USER)
+    @GET(UrlUtils.USER)
     Flowable<String> register(
             @Query("phone")
                     String phone,
@@ -34,7 +34,7 @@ public interface ApiService {
             @Query("type")
                     int type);
 
-    @GET(ConstantUtils.TAOBAOURL)
+    @GET(UrlUtils.TAOBAOURL)
     Flowable<String> getIp(
             @Query("ip")
                     String ip);

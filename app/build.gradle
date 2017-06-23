@@ -44,8 +44,9 @@ dependencies {
      * 测试框架
      */
     //android测试框架
-    androidTestCompile appTestDependencies.espresso
-    androidTestCompile appTestDependencies.testingSupportLib
+    androidTestCompile(appTestDependencies.espresso,{
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
     //junit测试
     testCompile appTestDependencies.junit
     /**
@@ -74,6 +75,7 @@ dependencies {
     compile appDependencies.fastjson
     // 图片加载glide
     compile appDependencies.fresco
+    compile appDependencies.frescoOkhttp
     // Dagger2注入框架
     compile appDependencies.dagger
     annotationProcessor appDependencies.daggerCompiler

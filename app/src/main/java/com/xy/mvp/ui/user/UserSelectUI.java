@@ -24,6 +24,7 @@ public class UserSelectUI extends BaseActivity {
     @Override
     public void initData() {
         baseActivityPresenter.requestPermission(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},6666);
+//        iv_content.setImageResource(R.mipmap.ic_launcher);
         iv_content.setImageResource(R.mipmap.ic_launcher);
     }
 

@@ -25,7 +25,6 @@ ext {
     greendaoVersion = '3.2.2'
     //Testing
     jUnitVersion = '4.12'
-    testingSupportLibVersion = '0.1'
     espressoVersion = "2.2.2"
 
     //Development
@@ -48,14 +47,15 @@ ext {
             ormlite                 : "com.j256.ormlite:ormlite-android:${ormliteVersion}",
             fastjson                : "com.alibaba:fastjson:${fastjsonVersion}",
             fresco                  : "com.facebook.fresco:fresco:${frescoVersion}",
+            frescoOkhttp            : "com.facebook.fresco:imagepipeline-okhttp3:${frescoVersion}",
             greendao                : "org.greenrobot:greendao-generator:${greendaoVersion}",
             greendaoGenerator       : "org.greenrobot:greendao-generator:${greendaoVersion}"
+
     ]
 
     appTestDependencies = [
             junit            : "junit:junit:${jUnitVersion}",
             espresso         : "com.android.support.test.espresso:espresso-core:${espressoVersion}",
-            testingSupportLib: "com.android.support.test:testing-support-lib:${testingSupportLibVersion}"
     ]
     developmentDependencies = [
             leakCanary: "com.squareup.leakcanary:leakcanary-android:${leakCanaryVersion}",

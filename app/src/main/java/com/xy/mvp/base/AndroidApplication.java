@@ -3,14 +3,9 @@ package com.xy.mvp.base;
 import android.app.Application;
 import android.content.Context;
 
-import com.facebook.cache.disk.DiskCacheConfig;
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.squareup.leakcanary.LeakCanary;
 import com.xy.mvp.BuildConfig;
-import com.xy.mvp.utils.FileUtils;
-
-import java.io.File;
+import com.xy.mvp.utils.FrescoUtils;
 
 /**
  * anthor:Created by tianchen on 2017/2/13.
@@ -19,12 +14,14 @@ import java.io.File;
 
 public class AndroidApplication extends Application {
     private static Context context;
+
     @Override
     public void onCreate() {
         super.onCreate();
         setContext(this);
         initEnv();
     }
+
     public static Context getAppContext() {
         return context;
     }
@@ -37,15 +34,8 @@ public class AndroidApplication extends Application {
      * 初始化运行环境
      */
     private void initEnv() {
-        Fresco.initialize(this);
-        Fresco.initialize(this, ImagePipelineConfig.newBuilder(this)
-                .setMainDiskCacheConfig(
-                        DiskCacheConfig.newBuilder(this)
-                                .setBaseDirectoryPath(new File(FileUtils.getAppFile()+"image")) // 注意Android运行时权限。
-                                .build()
-                )
-                .build()
-        );
+        //初始化Fresco
+        FrescoUtils.initFresco(this);
         //LeakCanary内存泄露检测
         if (BuildConfig.DEBUG) {
             LeakCanary.install(this);

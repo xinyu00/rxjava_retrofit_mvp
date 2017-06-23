@@ -8,7 +8,7 @@ import com.xy.mvp.presenter.api.Api;
 import com.xy.mvp.presenter.api.ApiService;
 import com.xy.mvp.presenter.api.HostType;
 import com.xy.mvp.ui.user.LoginUI;
-import com.xy.mvp.utils.ConstantUtils;
+import com.xy.mvp.utils.UrlUtils;
 
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
@@ -33,7 +33,7 @@ public class LoginUIPresenter{
     @Inject
     public LoginUIPresenter(LoginUI activity) {
         this.activity = activity;
-        api = Api.getDefault(HostType.TYPE1, ConstantUtils.BASEURL);
+        api = Api.getDefault(HostType.TYPE1, UrlUtils.BASEURL);
         subscriptions = new ArrayList<>();
     }
 
