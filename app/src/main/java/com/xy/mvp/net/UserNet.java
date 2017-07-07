@@ -54,7 +54,7 @@ public class UserNet {
     }
 
     public void getRegister(String phone, String password, int role, int type, final NetBack back) {
-        api.register(phone, password, 0, 0)
+        api.register(phone, password, role, type)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<String>() {

@@ -39,7 +39,7 @@ public class RegisterUIPresenter {
      * 用户注册
      */
     public void register(final String phone, final String password) {
-        UserNet.getInstance(api).getRegister(phone,password,0,0,new NetBack(){
+        UserNet.getInstance(api).getRegister(phone, password, 0, 0, new NetBack() {
             @Override
             public void onSuccess(String s) {
                 ResponseInfo info = JSON.parseObject(s, ResponseInfo.class);

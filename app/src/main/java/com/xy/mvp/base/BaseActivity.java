@@ -192,7 +192,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
-        super.onResume();
+        super.onStart();
         if (onStartFlag) {
             //设置沉浸式标题栏
             setSonView();
