@@ -5,12 +5,27 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.SparseArray;
 
-import com.xy.mvp.base.AndroidApplication;
 import com.xy.mvp.utils.NetWorkUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.security.KeyManagementException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.concurrent.TimeUnit;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManagerFactory;
+import javax.net.ssl.X509TrustManager;
 
 import okhttp3.Cache;
 import okhttp3.CacheControl;
@@ -22,6 +37,8 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
+
+import static com.xy.mvp.base.AndroidApplication.getAppContext;
 
 /**
  * anthor:Created by tianchen on 2017/5/14.
@@ -77,7 +94,7 @@ public class Api {
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
         logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         //缓存
-        File cacheFile = new File(AndroidApplication.getAppContext().getCacheDir(), "cache");
+        File cacheFile = new File(getAppContext().getCacheDir(), "cache");
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 100); //100Mb
         //增加头部信息
         Interceptor headerInterceptor = new Interceptor() {
@@ -97,6 +114,8 @@ public class Api {
                 .addNetworkInterceptor(getInterceptor())
                 .addInterceptor(headerInterceptor)
                 .addInterceptor(logInterceptor)
+                .hostnameVerifier(getHostName())
+                .sslSocketFactory(setHttps(),getX509())
                 .cache(cache)
                 .build();
         Retrofit retrofit = new Retrofit.Builder()
@@ -106,6 +125,71 @@ public class Api {
                 .baseUrl(baseUrl)       //hostType用于分类url
                 .build();
         movieService = retrofit.create(ApiService.class);
+    }
+
+    private X509TrustManager getX509(){
+       return new X509TrustManager() {
+            public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                return new java.security.cert.X509Certificate[] {};
+            }
+            public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+
+            }
+            public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+
+            }
+        };
+    }
+
+    private HostnameVerifier getHostName(){
+        return new HostnameVerifier() {
+            @Override
+            public boolean verify(String hostname, SSLSession session) {
+                return true;
+            }
+        };
+    }
+
+
+    private SSLSocketFactory setHttps() {
+        SSLContext sslContext = null;
+        try {
+            KeyStore keyStore = KeyStore.getInstance("BKS");
+            KeyStore trustStore = KeyStore.getInstance("BKS");
+
+            //读取证书
+            InputStream ksIn = getAppContext().getResources().getAssets().open("client.bks");
+            InputStream tsIn = getAppContext().getResources().getAssets().open("truststore.bks");
+
+            keyStore.load(ksIn,"123456".toCharArray());
+            trustStore.load(tsIn,"123456".toCharArray());
+            ksIn.close();
+            tsIn.close();
+
+            sslContext = SSLContext.getInstance("TLS");
+            TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance("X509");
+            KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("X509");
+
+
+            trustManagerFactory.init(trustStore);
+            keyManagerFactory.init(keyStore, "123456".toCharArray());
+
+            sslContext.init(keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers(), null);
+
+        }  catch (CertificateException e) {
+            e.printStackTrace();
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (UnrecoverableKeyException e) {
+            e.printStackTrace();
+        }
+        return sslContext.getSocketFactory();
     }
 
 
@@ -127,7 +211,7 @@ public class Api {
      */
     @NonNull
     public static String getCacheControl() {
-        return NetWorkUtils.isNetConnected(AndroidApplication.getAppContext()) ? CACHE_CONTROL_AGE : CACHE_CONTROL_CACHE;
+        return NetWorkUtils.isNetConnected(getAppContext()) ? CACHE_CONTROL_AGE : CACHE_CONTROL_CACHE;
     }
 
 
@@ -135,19 +219,19 @@ public class Api {
      * 云端响应头拦截器，用来配置缓存策略
      * Dangerous interceptor that rewrites the server's cache-control header.
      */
-    private Interceptor getInterceptor(){
+    private Interceptor getInterceptor() {
         return new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request request = chain.request();
                 String cacheControl = request.cacheControl().toString();
-                if (!NetWorkUtils.isNetConnected(AndroidApplication.getAppContext())) {
+                if (!NetWorkUtils.isNetConnected(getAppContext())) {
                     request = request.newBuilder()
                             .cacheControl(TextUtils.isEmpty(cacheControl) ? CacheControl.FORCE_NETWORK : CacheControl.FORCE_CACHE)
                             .build();
                 }
                 Response originalResponse = chain.proceed(request);
-                if (NetWorkUtils.isNetConnected(AndroidApplication.getAppContext())) {
+                if (NetWorkUtils.isNetConnected(getAppContext())) {
                     //有网的时候读接口上的@Headers里的配置，你可以在这里进行统一的设置
 
                     return originalResponse.newBuilder()
