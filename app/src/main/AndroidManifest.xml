@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.xy.mvp">
+    package="com.speed.mvp">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".base.AndroidApplication"
+        android:name="com.speed.mvp.base.AndroidApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -19,16 +19,16 @@
         android:exported = "false"
         android:theme="@style/AppTheme"
         tools:replace="icon,allowBackup,label">
-        <activity android:name=".ui.user.UserSelectUI">
+        <activity android:name="com.speed.mvp.ui.user.UserSelectUI">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.user.LoginUI" />
-        <activity android:name=".ui.IndexUI" />
-        <activity android:name=".ui.NavigateUI" />
-        <activity android:name=".ui.user.RegisterUI"/>
+        <activity android:name="com.speed.mvp.ui.user.LoginUI" />
+        <activity android:name="com.speed.mvp.ui.IndexUI" />
+        <activity android:name="com.speed.mvp.ui.NavigateUI" />
+        <activity android:name="com.speed.mvp.ui.user.RegisterUI"/>
 
     </application>
 
