@@ -2,13 +2,7 @@ package com.speed.mvp.dagger.module;
 
 import android.app.Activity;
 
-import com.speed.mvp.base.BaseActivity;
 import com.speed.mvp.dagger.PerActivity;
-import com.speed.mvp.presenter.BaseActivityPresenter;
-import com.speed.mvp.presenter.user.LoginUIPresenter;
-import com.speed.mvp.presenter.user.RegisterUIPresenter;
-import com.speed.mvp.ui.user.LoginUI;
-import com.speed.mvp.ui.user.RegisterUI;
 
 import dagger.Module;
 import dagger.Provides;
@@ -31,18 +25,4 @@ public class ActivityModule {
         return this.activity;
     }
 
-    @Provides @PerActivity
-    LoginUIPresenter provideLoginPresenter() {
-        return new LoginUIPresenter((LoginUI) activity());
-    }
-
-    @Provides @PerActivity
-    RegisterUIPresenter provideRegisterPresenter() {
-        return new RegisterUIPresenter((RegisterUI) activity());
-    }
-
-    @Provides @PerActivity
-    BaseActivityPresenter provideBasePresenter() {
-        return new BaseActivityPresenter((BaseActivity) activity());
-    }
 }

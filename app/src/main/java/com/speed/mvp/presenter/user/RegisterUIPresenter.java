@@ -1,5 +1,7 @@
 package com.speed.mvp.presenter.user;
 
+import android.app.Activity;
+
 import com.alibaba.fastjson.JSON;
 import com.speed.mvp.dagger.PerActivity;
 import com.speed.mvp.entity.ResponseInfo;
@@ -29,8 +31,8 @@ public class RegisterUIPresenter {
     private List<Subscription> subscriptions;
 
     @Inject
-    public RegisterUIPresenter(RegisterUI activity) {
-        this.activity = activity;
+    public RegisterUIPresenter(Activity activity) {
+        this.activity = (RegisterUI)activity;
         api = Api.getDefault(HostType.TYPE1, UrlUtils.BASEURL);
         subscriptions = new ArrayList<>();
     }

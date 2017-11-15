@@ -1,5 +1,6 @@
 package com.speed.mvp.presenter;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -32,8 +33,8 @@ public class BaseActivityPresenter {
     public int REQUEST_CODE_PERMISSION = 0x0009;
 
     @Inject
-    public BaseActivityPresenter(BaseActivity activity) {
-        this.activity = activity;
+    public BaseActivityPresenter(Activity activity) {
+        this.activity = (BaseActivity)activity;
     }
 
     /**

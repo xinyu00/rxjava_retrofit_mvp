@@ -1,5 +1,6 @@
 package com.speed.mvp.presenter.user;
 
+import android.app.Activity;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -30,8 +31,8 @@ public class LoginUIPresenter {
     private List<Subscription> subscriptions;
 
     @Inject
-    public LoginUIPresenter(LoginUI activity) {
-        this.activity = activity;
+    public LoginUIPresenter(Activity activity) {
+        this.activity = (LoginUI) activity;
         api = Api.getDefault(HostType.TYPE1, UrlUtils.BASEURL);
         subscriptions = new ArrayList<>();
     }

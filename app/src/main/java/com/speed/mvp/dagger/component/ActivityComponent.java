@@ -19,7 +19,8 @@ import dagger.Component;
 @Component(modules = ActivityModule.class)
 public interface ActivityComponent {
     Activity activity();
+
+    void inject(BaseActivity activity);
     void inject(RegisterUI activity);
     void inject(LoginUI activity);
-    void inject(BaseActivity activity);
 }
